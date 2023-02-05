@@ -21,11 +21,14 @@ public class MapGenerator : MonoBehaviour
     public ScriptableObject wallTiles;
     public Tile groundTile;
     public ScriptableObject entranceTiles;
+    public GameObject playerPrefab;
 
     private int[,] map;
     private int borderSize = 5;
-    List<List<Vector2Int>> caverns;
     private Vector3Int[] entrance = new Vector3Int[3 * 4];
+    private Vector2Int spawnPoint;
+    private List<List<Vector2Int>> caverns;
+    
 
     private void Start()
     {
@@ -68,10 +71,6 @@ public class MapGenerator : MonoBehaviour
                 {
                     map[x, y] = 1;
                 }
-                //if (x == 0 || x == width-1 || y == 0 || y == height-1 || x == 1 || x == width-2 || y == 1 || y == height -2 || x == 2 || x == width - 3 || y == 2 || y == height - 3)
-                //{
-                //    map[x, y] = 1;
-                //}
                 else
                 {
                     map[x, y] = (rng.Next(101) < fillProcentage) ? 1 : 0;
@@ -145,6 +144,7 @@ public class MapGenerator : MonoBehaviour
         System.Random rng = new System.Random();
         int selected = rng.Next(0, possibleEntrances.Count);
 
+        spawnPoint = possibleEntrances[selected];
         GetEntranceTiles(possibleEntrances[selected].x, possibleEntrances[selected].y);
     }
 
@@ -237,5 +237,6 @@ public class MapGenerator : MonoBehaviour
                 WallTilemap.SetTile(entrance[i], entranceTile);
             }
         }
+        Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
     }
 }

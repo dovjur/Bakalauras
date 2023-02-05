@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu]
-public class EntranceTilesRules : RuleTile<EntranceTilesRules.Neighbor> {
+public class AdvancedTileRules : RuleTile<AdvancedTileRules.Neighbor> {
     public bool customField;
     public bool alwaysConnect;
     public TileBase[] tilesToConnect;
