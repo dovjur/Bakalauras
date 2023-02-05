@@ -476,30 +476,30 @@ Tilemap:
       e33: 0
   - m_RefCount: 0
     m_Data:
-      e00: -3.207248e+28
+      e00: -24.782944
       e01: 0
-      e02: 2.1006438e-19
-      e03: 2.1006438e-19
+      e02: 1.1020282e-38
+      e03: 1.1020282e-38
       e10: 4.5908e-41
       e11: 0
-      e12: 4.8e-43
-      e13: 4.8e-43
-      e20: -8.5225e-19
+      e12: 7e-43
+      e13: 7e-43
+      e20: -5.102235e+37
       e21: 1e-45
-      e22: -2.479873e-19
-      e23: -1.6352444e+29
-      e30: 4.5904e-41
+      e22: -6.431846e-19
+      e23: -2.6135592e-29
+      e30: 4.5905e-41
       e31: 0
-      e32: 4.8e-43
-      e33: 4.83e-43
+      e32: 7e-43
+      e33: 7.03e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 3.6734e-41, g: 3.6734e-41, b: 3.6734e-41, a: 3.6734e-41}
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 89, y: 46, z: 1}
+  m_Origin: {x: -35, y: -11, z: 0}
+  m_Size: {x: 124, y: 57, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -890,19 +890,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   height: 63
   width: 112
-  fillProcentage: 52
-  iterations: 3
+  fillProcentage: 50
+  iterations: 10
   GroundTilemap: {fileID: 653128933}
   WallTilemap: {fileID: 1351512147}
   wallTiles: {fileID: 11400000, guid: 56a1031d04e015141bf5468b796a01e2, type: 2}
   groundTile: {fileID: 11400000, guid: 746e49f2dd3d0034cbea2cd1439fdc55, type: 2}
-  entranceTiles:
-  - {fileID: 11400000, guid: dbe1dbdce6b488148b3ffb38fd80afa0, type: 2}
-  - {fileID: 11400000, guid: 47d6531df32a4ac409e269fedd1b752d, type: 2}
-  - {fileID: 11400000, guid: f9abb7083bf01934bacf23caad8d291a, type: 2}
-  - {fileID: 11400000, guid: b5826c8e250f87841945fe24a6d946d4, type: 2}
-  - {fileID: 11400000, guid: 9e948a91c506e9544bbfb55ada925d0b, type: 2}
-  - {fileID: 11400000, guid: adf3f5e6738224e46ae0b41956d964db, type: 2}
-  - {fileID: 11400000, guid: c3dff7ffa5133144186d0c81aa30f61a, type: 2}
-  - {fileID: 11400000, guid: 8bb5f74e0f442f4479b8c0ff3c303549, type: 2}
-  - {fileID: 11400000, guid: f7f2b475280cfb04895e275325d72357, type: 2}
+  entranceTiles: {fileID: 11400000, guid: 30bffd7d5a3d3e842a3b786988131ab9, type: 2}

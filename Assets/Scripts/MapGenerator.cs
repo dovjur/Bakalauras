@@ -20,11 +20,12 @@ public class MapGenerator : MonoBehaviour
     public Tilemap WallTilemap;
     public ScriptableObject wallTiles;
     public Tile groundTile;
-    public Tile[] entranceTiles;
+    public ScriptableObject entranceTiles;
 
     private int[,] map;
+    private int borderSize = 5;
     List<List<Vector2Int>> caverns;
-    private Vector3Int[] entrance;
+    private Vector3Int[] entrance = new Vector3Int[3 * 4];
 
     private void Start()
     {
@@ -52,23 +53,28 @@ public class MapGenerator : MonoBehaviour
         }
 
         IndentifyCaverns();
+        SetEntrance();
     }
 
     private void RandomMapFill()
     {
-        System.Random rnd = new System.Random();
+        System.Random rng = new System.Random();
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (x == 0 || x == width-1 || y == 0 || y == height-1 || x == 1 || x == width-2 || y == 1 || y == height -2 || x == 2 || x == width - 3 || y == 2 || y == height - 3)
+                if (x < borderSize || x > width - borderSize || y < borderSize || y > height - borderSize)
                 {
                     map[x, y] = 1;
                 }
+                //if (x == 0 || x == width-1 || y == 0 || y == height-1 || x == 1 || x == width-2 || y == 1 || y == height -2 || x == 2 || x == width - 3 || y == 2 || y == height - 3)
+                //{
+                //    map[x, y] = 1;
+                //}
                 else
                 {
-                    map[x, y] = (rnd.Next(101) < fillProcentage) ? 1 : 0;
+                    map[x, y] = (rng.Next(101) < fillProcentage) ? 1 : 0;
                 } 
             }
         }
@@ -80,7 +86,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                int neighbourWallTiles = GetSurroundingWallCount(x,y);
+                int neighbourWallTiles = GetSurroundingWallTileCount(x,y);
 
                 if (neighbourWallTiles > 4)
                 {
@@ -94,7 +100,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private int GetSurroundingWallCount(int gridX, int gridY)
+    private int GetSurroundingWallTileCount(int gridX, int gridY)
     {
         int wallCount = 0;
         for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
@@ -117,22 +123,64 @@ public class MapGenerator : MonoBehaviour
         return wallCount;
     }
 
-    private Vector3Int[] GetSurroundingTiles(int gridX, int gridY)
+    private void SetEntrance()
     {
-        Vector3Int[] walls = new Vector3Int[3 * 3];
-        int index = 0;
-        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+        List<Vector2Int> possibleEntrances = new List<Vector2Int>();
+        for (int x = borderSize; x < width - borderSize; x++)
         {
-            for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
+            for (int y = borderSize; y < height - borderSize; y++)
+            {
+                if (CanBeEntrance(x,y))
+                {
+                    possibleEntrances.Add(new Vector2Int(x,y));
+                }
+            }
+        }
+
+        if (possibleEntrances.Count == 0)
+        {
+            GenerateMap();
+        }
+
+        System.Random rng = new System.Random();
+        int selected = rng.Next(0, possibleEntrances.Count);
+
+        GetEntranceTiles(possibleEntrances[selected].x, possibleEntrances[selected].y);
+    }
+
+    private bool CanBeEntrance(int gridX, int gridY)
+    {
+        bool canBeEntrance = true;
+        for (int neighbourX = gridX - 2; neighbourX <= gridX + 2; neighbourX++)
+        {
+            for (int neighbourY = gridY; neighbourY <= gridY + 2; neighbourY++)
             {
                 if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
                 {
-                    walls[index] = new Vector3Int(neighbourX, neighbourY, 0);
+                    if (map[neighbourX, gridY - 1] != 0 || map[neighbourX, neighbourY] != 1)
+                    {
+                        canBeEntrance = false;
+                    }
+                }       
+            }
+        }
+        return canBeEntrance;
+    }
+
+    private void GetEntranceTiles(int gridX, int gridY)
+    {
+        int index = 0;
+        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+        {
+            for (int neighbourY = gridY; neighbourY <= gridY + 2; neighbourY++)
+            {
+                if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
+                {
+                    entrance[index] = new Vector3Int(neighbourX, neighbourY, 0);
                     index++;
                 }
             }
         }
-        return walls;
     }
     private void IndentifyCaverns()
     {
@@ -152,7 +200,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-
+    
     private void FloodFill(int x, int y, bool[,] visited, List<Vector2Int> cavern)
     {
         if (x >= 0 && x < width && y >= 0 && y < height && map[x, y] == 0 && !visited[x, y])
@@ -167,14 +215,10 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void SetEntrance()
-    {
-        entrance = GetSurroundingTiles(1,1);
-    }
-
     private void DrawMap()
     {
         RuleTile wallTile = wallTiles as RuleTile;
+        RuleTile entranceTile = entranceTiles as RuleTile;
         if (map != null)
         {
             for (int x = 0; x < width; x++)
@@ -188,8 +232,10 @@ public class MapGenerator : MonoBehaviour
                     GroundTilemap.SetTile(new Vector3Int(x, y), groundTile);
                 }
             }
-            //SetEntrance();
-            //WallTilemap.SetTiles(entrance,entranceTiles);
+            for (int i = 0; i < entrance.Count(); i++)
+            {
+                WallTilemap.SetTile(entrance[i], entranceTile);
+            }
         }
     }
 }

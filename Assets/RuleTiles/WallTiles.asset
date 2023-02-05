@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Script: {fileID: 11500000, guid: 039976db12380cd448dada27ac133ed6, type: 3}
   m_Name: WallTiles
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 0}
@@ -473,3 +473,8 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     - {x: 1, y: -1, z: 0}
     m_RuleTransform: 0
+  customField: 0
+  alwaysConnect: 1
+  tilesToConnect:
+  - {fileID: 11400000, guid: 30bffd7d5a3d3e842a3b786988131ab9, type: 2}
+  checkSelf: 1
