@@ -1,3 +1,4 @@
+using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,22 +28,12 @@ public class MapGenerator : MonoBehaviour
     private int borderSize = 5;
     private Vector3Int[] entrance = new Vector3Int[3 * 4];
     private Vector2Int spawnPoint;
-    private List<List<Vector2Int>> caverns;
     
 
     private void Start()
     {
         GenerateMap();
         DrawMap();     
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GenerateMap();
-            DrawMap();
-        }
     }
 
     private void GenerateMap()
@@ -184,7 +175,7 @@ public class MapGenerator : MonoBehaviour
     }
     private void IndentifyCaverns()
     {
-        caverns = new List<List<Vector2Int>>();
+        List<Cavern> caverns = new List<Cavern>();
         bool[,] visited = new bool[width, height];
 
         for (int x = 0; x < width; x++)
@@ -193,26 +184,172 @@ public class MapGenerator : MonoBehaviour
             {
                 if (map[x, y] == 0 && !visited[x, y])
                 {
-                    List<Vector2Int> cavern = new List<Vector2Int>();
-                    FloodFill(x, y, visited, cavern);
-                    caverns.Add(cavern);
+                    List<Vector2Int> cavernRegion = new List<Vector2Int>();
+                    FloodFill(x, y, visited, cavernRegion);
+                    if (cavernRegion.Count < 50)
+                    {
+                        foreach (Vector2Int tile in cavernRegion)
+                        {
+                            map[tile.x, tile.y] = 1;
+                        }
+                    }
+                    else
+                    {
+                        caverns.Add(new Cavern(cavernRegion, map));
+                    }
+                }
+            }
+        }
+        ConnectClosestCaverns(caverns);
+    }
+
+    private void ConnectClosestCaverns(List<Cavern> allCaverns)
+    {
+        int shortestDistande = 0;
+        Vector2Int closestTileA = new Vector2Int();
+        Vector2Int closestTileB = new Vector2Int();
+        Cavern closestCavernA = new Cavern();
+        Cavern closestCavernB = new Cavern();
+        bool connectionFound = false;
+
+        foreach (Cavern cavernA in allCaverns)
+        {
+            connectionFound = false;
+            foreach (Cavern cavernB in allCaverns)
+            {
+                if (cavernB == cavernA)
+                {
+                    continue;
+                }
+                if (cavernA.IsConnected(cavernB))
+                {
+                    connectionFound = false;
+                    break;
+                }
+                for (int indexA = 0; indexA < cavernA.edgeTiles.Count; indexA++)
+                {
+                    for (int indexB = 0; indexB < cavernB.edgeTiles.Count; indexB++)
+                    {
+                        Vector2Int tileA = cavernA.edgeTiles[indexA];
+                        Vector2Int tileB = cavernB.edgeTiles[indexB];
+                        int distance = (int)(Mathf.Pow(tileA.x - tileB.x, 2) + Mathf.Pow(tileA.y-tileB.y, 2));
+
+                        if (distance < shortestDistande || !connectionFound)
+                        {
+                            shortestDistande = distance;
+                            connectionFound = true;
+                            closestTileA = tileA;
+                            closestTileB = tileB;
+                            closestCavernA = cavernA;
+                            closestCavernB = cavernB;
+                        }
+                    }
+                }
+            }
+            if (connectionFound)
+            {
+                CreatePassage(closestCavernA, closestCavernB, closestTileA, closestTileB);
+            }
+        }
+    }
+
+    private void CreatePassage(Cavern cavernA, Cavern cavernB, Vector2Int tileA, Vector2Int tileB)
+    {
+        Cavern.ConnectCaverns(cavernA,cavernB);
+
+        List<Vector2Int> line = GetLine(tileA,tileB);
+        foreach (Vector2Int coord in line)
+        {
+            DrawCircle(coord,3);
+        }
+    }
+
+    private void DrawCircle(Vector2Int coord, int r)
+    {
+        for (int x = -r; x <= r; x++)
+        {
+            for (int y = -r; y <= r; y++)
+            {
+                if (x*x + y*y <= r*r)
+                {
+                    int drawX = coord.x + x;
+                    int drawY = coord.y + y;
+                    if (IsInMapRange(drawX,drawY))
+                    {
+                        map[drawX, drawY] = 0;
+                    }
                 }
             }
         }
     }
+
+    private List<Vector2Int> GetLine(Vector2Int from, Vector2Int to)
+    {
+        List<Vector2Int> line = new List<Vector2Int>();
+
+        int x = from.x;
+        int y = from.y;
+        int dx = to.x - from.x;
+        int dy = to.y - from.y;
+        bool inverted = false;
+        int step = Math.Sign(dx);
+        int gradientStep = Math.Sign(dy);
+        int longest = Math.Abs(dx);
+        int shortest = Math.Abs(dy);
+
+        if (longest < shortest)
+        {
+            inverted = true;
+            longest = Math.Abs(dy);
+            shortest = Math.Abs(dx);
+            step = Math.Sign(dy);
+            gradientStep = Math.Sign(dx);
+        }
+        int gradientAccumuliation = longest / 2;
+        for (int i = 0; i < longest; i++)
+        {
+            line.Add(new Vector2Int(x,y));
+            if (inverted)
+            {
+                y += step;
+            }
+            else
+            {
+                x += step;
+            }
+            gradientAccumuliation += shortest;
+            if (gradientAccumuliation >= longest)
+            {
+                if (inverted)
+                {
+                    x += gradientStep;
+                }
+                else
+                {
+                    y += gradientStep;
+                }
+            }
+        }
+        return line;
+    }
     
-    private void FloodFill(int x, int y, bool[,] visited, List<Vector2Int> cavern)
+    private void FloodFill(int x, int y, bool[,] visited, List<Vector2Int> cavernRegion)
     {
         if (x >= 0 && x < width && y >= 0 && y < height && map[x, y] == 0 && !visited[x, y])
         {
             visited[x, y] = true;
-            cavern.Add(new Vector2Int(x, y));
+            cavernRegion.Add(new Vector2Int(x, y));
 
-            FloodFill(x - 1, y, visited, cavern);
-            FloodFill(x + 1, y, visited, cavern);
-            FloodFill(x, y - 1, visited, cavern);
-            FloodFill(x, y + 1, visited, cavern);
+            FloodFill(x - 1, y, visited, cavernRegion);
+            FloodFill(x + 1, y, visited, cavernRegion);
+            FloodFill(x, y - 1, visited, cavernRegion);
+            FloodFill(x, y + 1, visited, cavernRegion);
         }
+    }
+
+    bool IsInMapRange(int x, int y)
+    {
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 
     private void DrawMap()
