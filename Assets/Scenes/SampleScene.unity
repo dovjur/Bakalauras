@@ -824,7 +824,7 @@ MonoBehaviour:
   height: 63
   width: 112
   fillProcentage: 50
-  iterations: 10
+  iterations: 20
   GroundTilemap: {fileID: 653128933}
   WallTilemap: {fileID: 1351512147}
   wallTiles: {fileID: 11400000, guid: 56a1031d04e015141bf5468b796a01e2, type: 2}

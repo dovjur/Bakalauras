@@ -36,19 +36,8 @@ public class Cavern: IComparable<Cavern>
         }
     }
 
-    public static void ConnectCaverns(Cavern cavernA, Cavern cavernB)
-    {
-        cavernA.connectedCaverns.Add(cavernB);
-        cavernB.connectedCaverns.Add(cavernA);
-    }
-
     public int CompareTo(Cavern otherCavern)
     {
         return otherCavern.size.CompareTo(size);
-    }
-
-    public bool IsConnected(Cavern otherCavern)
-    {
-        return connectedCaverns.Contains(otherCavern);
     }
 }

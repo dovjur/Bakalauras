@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -34,6 +35,17 @@ public class MapGenerator : MonoBehaviour
     {
         GenerateMap();
         DrawMap();     
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GroundTilemap.ClearAllTiles();
+            WallTilemap.ClearAllTiles();
+            CleanUp();
+            DrawMap();
+        }
     }
 
     private void GenerateMap()
@@ -82,7 +94,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     map[x, y] = 1;
                 }
-                else if(neighbourWallTiles < 4)
+                else if (neighbourWallTiles < 4)
                 {
                     map[x, y] = 0;
                 }
@@ -186,77 +198,108 @@ public class MapGenerator : MonoBehaviour
                 {
                     List<Vector2Int> cavernRegion = new List<Vector2Int>();
                     FloodFill(x, y, visited, cavernRegion);
-                    if (cavernRegion.Count < 50)
-                    {
-                        foreach (Vector2Int tile in cavernRegion)
-                        {
-                            map[tile.x, tile.y] = 1;
-                        }
-                    }
-                    else
-                    {
-                        caverns.Add(new Cavern(cavernRegion, map));
-                    }
+                    caverns.Add(new Cavern(cavernRegion, map));
+                    //if (cavernRegion.Count < 50)
+                    //{
+                    //    foreach (Vector2Int tile in cavernRegion)
+                    //    {
+                    //        //map[tile.x, tile.y] = 1;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    caverns.Add(new Cavern(cavernRegion, map));
+                    //}
                 }
             }
         }
-        ConnectClosestCaverns(caverns);
+        if (caverns.Count > 1)
+        {
+            Test(caverns);
+        }
     }
 
-    private void ConnectClosestCaverns(List<Cavern> allCaverns)
+    private void Test(List<Cavern> allCaverns)
     {
-        int shortestDistande = 0;
+        Dictionary<Tuple<Cavern, Cavern>, Passage> passages = new Dictionary<Tuple<Cavern, Cavern>, Passage>();
+        for (int i = 0; i < allCaverns.Count; i++)
+        {
+            for (int j = i + 1; j < allCaverns.Count; j++)
+            {
+                Passage passage = FindPassage(allCaverns[i], allCaverns[j]);
+                passages.Add(Tuple.Create(allCaverns[i], allCaverns[j]), passage);
+                passages.Add(Tuple.Create(allCaverns[j], allCaverns[i]), passage);
+            }
+        }
+
+        List<Cavern> visitedCaverns = new List<Cavern>();
+        allCaverns.Sort();
+        visitedCaverns.Add(allCaverns[0]);
+
+        List<Passage> connectingPassages = new List<Passage>();
+
+        while (visitedCaverns.Count < allCaverns.Count)
+        {
+            Cavern nextCavern = null;
+            Passage shortestPassage = null;
+            int shortestDistance = int.MaxValue;
+
+            foreach (Cavern visitedCavern in visitedCaverns)
+            {
+                foreach (Cavern cavern in allCaverns)
+                {
+                    if (!visitedCaverns.Contains(cavern))
+                    {
+                        Tuple<Cavern, Cavern> key = Tuple.Create(visitedCavern, cavern);
+                        Passage passage = passages[key];
+                        int distance = passage.distance;
+
+                        if (distance < shortestDistance)
+                        {
+                            shortestDistance = distance;
+                            nextCavern = cavern;
+                            shortestPassage = passage;
+                        }
+                    }
+                }
+            }
+            connectingPassages.Add(shortestPassage);
+            
+            visitedCaverns.Add(nextCavern);
+        }
+
+        foreach (Passage passage in connectingPassages)
+        {
+            CreatePassage(passage.startTile,passage.endTile);
+        }
+    }
+
+    private Passage FindPassage(Cavern cavernA, Cavern cavernB)
+    {
+        int shortestDistance = int.MaxValue;
         Vector2Int closestTileA = new Vector2Int();
         Vector2Int closestTileB = new Vector2Int();
-        Cavern closestCavernA = new Cavern();
-        Cavern closestCavernB = new Cavern();
-        bool connectionFound = false;
 
-        foreach (Cavern cavernA in allCaverns)
+        for (int indexA = 0; indexA < cavernA.edgeTiles.Count; indexA++)
         {
-            connectionFound = false;
-            foreach (Cavern cavernB in allCaverns)
+            for (int indexB = 0; indexB < cavernB.edgeTiles.Count; indexB++)
             {
-                if (cavernB == cavernA)
+                Vector2Int tileA = cavernA.edgeTiles[indexA];
+                Vector2Int tileB = cavernB.edgeTiles[indexB];
+                int distance = (int)(Mathf.Pow(tileA.x - tileB.x, 2) + Mathf.Pow(tileA.y - tileB.y, 2));
+                if (distance < shortestDistance)
                 {
-                    continue;
+                    shortestDistance = distance;
+                    closestTileA = tileA;
+                    closestTileB = tileB;
                 }
-                if (cavernA.IsConnected(cavernB))
-                {
-                    connectionFound = false;
-                    break;
-                }
-                for (int indexA = 0; indexA < cavernA.edgeTiles.Count; indexA++)
-                {
-                    for (int indexB = 0; indexB < cavernB.edgeTiles.Count; indexB++)
-                    {
-                        Vector2Int tileA = cavernA.edgeTiles[indexA];
-                        Vector2Int tileB = cavernB.edgeTiles[indexB];
-                        int distance = (int)(Mathf.Pow(tileA.x - tileB.x, 2) + Mathf.Pow(tileA.y-tileB.y, 2));
-
-                        if (distance < shortestDistande || !connectionFound)
-                        {
-                            shortestDistande = distance;
-                            connectionFound = true;
-                            closestTileA = tileA;
-                            closestTileB = tileB;
-                            closestCavernA = cavernA;
-                            closestCavernB = cavernB;
-                        }
-                    }
-                }
-            }
-            if (connectionFound)
-            {
-                CreatePassage(closestCavernA, closestCavernB, closestTileA, closestTileB);
             }
         }
+        return new Passage(closestTileA, closestTileB, shortestDistance);
     }
 
-    private void CreatePassage(Cavern cavernA, Cavern cavernB, Vector2Int tileA, Vector2Int tileB)
+    private void CreatePassage(Vector2Int tileA, Vector2Int tileB)
     {
-        Cavern.ConnectCaverns(cavernA,cavernB);
-
         List<Vector2Int> line = GetLine(tileA,tileB);
         foreach (Vector2Int coord in line)
         {
@@ -352,6 +395,23 @@ public class MapGenerator : MonoBehaviour
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
+    private void CleanUp()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (map[x,y] == 1 && x-1 >0 && y-1 >0 && x+1<width && y+1 < height)
+                {
+                    if (map[x-1,y] + map[x+1,y] + map[x,y-1] + map[x,y-1] <1)
+                    {
+                        map[x, y] = 0;
+                    }
+                }
+            }
+        }
+    }
+
     private void DrawMap()
     {
         RuleTile wallTile = wallTiles as RuleTile;
@@ -374,6 +434,6 @@ public class MapGenerator : MonoBehaviour
                 WallTilemap.SetTile(entrance[i], entranceTile);
             }
         }
-        Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
+        //Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
     }
 }
