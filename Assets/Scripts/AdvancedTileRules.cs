@@ -10,6 +10,7 @@ public class AdvancedTileRules : RuleTile<AdvancedTileRules.Neighbor> {
     public bool alwaysConnect;
     public TileBase[] tilesToConnect;
     public bool checkSelf = true;
+
     public class Neighbor : RuleTile.TilingRule.Neighbor {
         public const int Any = 3;
         public const int Specified = 4;

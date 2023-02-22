@@ -7,7 +7,6 @@ public class Cavern: IComparable<Cavern>
 {
     public List<Vector2Int> tiles;
     public List<Vector2Int> edgeTiles;
-    public List<Cavern> connectedCaverns;
     public int size;
 
     public Cavern() { }
@@ -15,7 +14,6 @@ public class Cavern: IComparable<Cavern>
     {
         tiles = cavernTiles;
         size = cavernTiles.Count;
-        connectedCaverns = new List<Cavern>();
 
         edgeTiles = new List<Vector2Int>();
         foreach (var tile in tiles)

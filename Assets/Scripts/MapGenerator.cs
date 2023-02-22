@@ -4,37 +4,47 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Timeline.Actions;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
+    [Header("Map Generation")]
     public int height;
     public int width;
 
     [Range(0, 100)]
     public int fillProcentage;
-
     public int iterations;
 
+    [Header("TileMaps & Tiles")]
     public Tilemap GroundTilemap;
     public Tilemap WallTilemap;
     public ScriptableObject wallTiles;
     public Tile groundTile;
     public ScriptableObject entranceTiles;
+
+    [Header("Prefabs")]
     public GameObject playerPrefab;
+    public GameObject lootChestPrefab;
 
     private int[,] map;
     private int borderSize = 5;
-    private Vector3Int[] entrance = new Vector3Int[3 * 4];
+    private Vector3Int[] entrance = new Vector3Int[3*4];
     private Vector2Int spawnPoint;
-    
+
+    public GameObject player;
+    public GameObject chest;
+    public Compass compass;
 
     private void Start()
     {
         GenerateMap();
-        DrawMap();     
+        DrawMap();
+        SpawnLootChest();
+        //compass.Set(player, chest);
     }
 
     private void Update()
@@ -58,6 +68,7 @@ public class MapGenerator : MonoBehaviour
             SmoothMap();
         }
 
+        CleanUp();
         IndentifyCaverns();
         SetEntrance();
     }
@@ -88,7 +99,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                int neighbourWallTiles = GetSurroundingWallTileCount(x,y);
+                int neighbourWallTiles = GetSurroundingWallTileCount(x,y,1,1);
 
                 if (neighbourWallTiles > 4)
                 {
@@ -102,14 +113,14 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private int GetSurroundingWallTileCount(int gridX, int gridY)
+    private int GetSurroundingWallTileCount(int gridX, int gridY, int offsetX, int offsetY)
     {
         int wallCount = 0;
-        for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++)
+        for (int neighbourX = gridX - offsetX; neighbourX <= gridX + offsetX; neighbourX++)
         {
-            for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++)
+            for (int neighbourY = gridY - offsetY; neighbourY <= gridY + offsetY; neighbourY++)
             {
-                if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
+                if (IsInMapRange(neighbourX,neighbourY))
                 {
                     if (gridX != neighbourX || gridY != neighbourY)
                     {
@@ -158,7 +169,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int neighbourY = gridY; neighbourY <= gridY + 2; neighbourY++)
             {
-                if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
+                if (IsInMapRange(neighbourX,neighbourY))
                 {
                     if (map[neighbourX, gridY - 1] != 0 || map[neighbourX, neighbourY] != 1)
                     {
@@ -177,7 +188,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int neighbourY = gridY; neighbourY <= gridY + 2; neighbourY++)
             {
-                if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height)
+                if (IsInMapRange(neighbourX,neighbourY))
                 {
                     entrance[index] = new Vector3Int(neighbourX, neighbourY, 0);
                     index++;
@@ -198,28 +209,31 @@ public class MapGenerator : MonoBehaviour
                 {
                     List<Vector2Int> cavernRegion = new List<Vector2Int>();
                     FloodFill(x, y, visited, cavernRegion);
-                    caverns.Add(new Cavern(cavernRegion, map));
-                    //if (cavernRegion.Count < 50)
-                    //{
-                    //    foreach (Vector2Int tile in cavernRegion)
-                    //    {
-                    //        //map[tile.x, tile.y] = 1;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    caverns.Add(new Cavern(cavernRegion, map));
-                    //}
+                    if (cavernRegion.Count < 50)
+                    {
+                        foreach (Vector2Int tile in cavernRegion)
+                        {
+                            map[tile.x, tile.y] = 1;
+                        }
+                    }
+                    else
+                    {
+                        caverns.Add(new Cavern(cavernRegion, map));
+                    }
                 }
             }
         }
-        if (caverns.Count > 1)
+        if (caverns.Count > 4)
         {
-            Test(caverns);
+            ConnectCaverns(caverns);
+        }
+        else
+        {
+            GenerateMap();
         }
     }
 
-    private void Test(List<Cavern> allCaverns)
+    private void ConnectCaverns(List<Cavern> allCaverns)
     {
         Dictionary<Tuple<Cavern, Cavern>, Passage> passages = new Dictionary<Tuple<Cavern, Cavern>, Passage>();
         for (int i = 0; i < allCaverns.Count; i++)
@@ -378,7 +392,7 @@ public class MapGenerator : MonoBehaviour
     
     private void FloodFill(int x, int y, bool[,] visited, List<Vector2Int> cavernRegion)
     {
-        if (x >= 0 && x < width && y >= 0 && y < height && map[x, y] == 0 && !visited[x, y])
+        if (IsInMapRange(x,y) && map[x, y] == 0 && !visited[x, y])
         {
             visited[x, y] = true;
             cavernRegion.Add(new Vector2Int(x, y));
@@ -397,31 +411,97 @@ public class MapGenerator : MonoBehaviour
 
     private void CleanUp()
     {
+        int sum = 0;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (map[x,y] == 1 && x-1 >0 && y-1 >0 && x+1<width && y+1 < height)
+                if (x-1 > 0 && x +1 <width && y-1 >0 && y+1 <height)
                 {
-                    if (map[x-1,y] + map[x+1,y] + map[x,y-1] + map[x,y-1] <1)
+                    sum = 0;
+                    if (map[x, y] == 1)
                     {
-                        map[x, y] = 0;
+                        sum = map[x - 1, y] + map[x + 1, y] + map[x, y - 1] + map[x, y + 1];
+                        if (sum == 1)
+                        {
+                            map[x, y] = 0;
+                        }
+                    }
+                    //if (map[x,y] == 1 && Test(x,y) == 1)
+                    //{
+                    //    map[x-1, y] = 1;
+                    //    map[x +1, y] = 1;
+                    //}
+                    if (map[x,y] == 1 && map[x,y-1] == 0)
+                    {
+                        ThickenWalls(x, y);
                     }
                 }
             }
         }
+    }
+    private int Test(int tileX, int tileY)
+    {
+        int sum = 0;
+        for (int x = tileX-2; x <= tileX+2; x++)
+        {
+            if (IsInMapRange(x, tileY) && x != tileX)
+            {
+                sum += map[x, tileY];
+            }
+        }
+        return sum;
+    }
+    private void ThickenWalls(int tileX, int tileY)
+    {
+        for (int y = 1; y <= 4; y++)
+        {
+            if (tileY + y < height)
+            {
+                if (map[tileX, tileY + y] == 0)
+                {
+                    map[tileX, tileY + y] = 1;
+                }
+            }
+        }
+    }
+
+    private void SpawnLootChest()
+    {
+        Vector3 lootCord = new Vector3();
+        float maxDistanceToLoot = 0;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (map[x,y] == 0)
+                {
+                    int neighbourWallTiles = GetSurroundingWallTileCount(x, y,1,1);
+                    float distance = (Mathf.Pow(x - spawnPoint.x, 2) + Mathf.Pow(y - spawnPoint.y, 2));
+                    if (distance > maxDistanceToLoot && neighbourWallTiles == 0)
+                    {
+                        maxDistanceToLoot = distance;
+                        lootCord = new Vector3(x, y, 0);
+                    }
+                }
+            }
+        }
+        chest = Instantiate(lootChestPrefab, lootCord, Quaternion.identity);
     }
 
     private void DrawMap()
     {
         RuleTile wallTile = wallTiles as RuleTile;
         RuleTile entranceTile = entranceTiles as RuleTile;
+        
         if (map != null)
         {
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
+                    Vector3Int tile = new Vector3Int(x, y);
                     if (map[x,y] == 1)
                     {
                         WallTilemap.SetTile(new Vector3Int(x,y), wallTile);
@@ -434,6 +514,6 @@ public class MapGenerator : MonoBehaviour
                 WallTilemap.SetTile(entrance[i], entranceTile);
             }
         }
-        //Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
+        //player = Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
     }
 }
