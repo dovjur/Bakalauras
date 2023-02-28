@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 using Unity.VisualScripting;
 using UnityEditor.Timeline.Actions;
 using UnityEditor.VersionControl;
@@ -23,7 +24,7 @@ public class MapGenerator : MonoBehaviour
     public Tilemap GroundTilemap;
     public Tilemap WallTilemap;
     public ScriptableObject wallTiles;
-    public Tile groundTile;
+    public ScriptableObject groundTiles;
     public ScriptableObject entranceTiles;
 
     [Header("Prefabs")]
@@ -44,7 +45,7 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
         DrawMap();
         SpawnLootChest();
-        //compass.Set(player, chest);
+        compass.Set(player, chest);
     }
 
     private void Update()
@@ -53,7 +54,7 @@ public class MapGenerator : MonoBehaviour
         {
             GroundTilemap.ClearAllTiles();
             WallTilemap.ClearAllTiles();
-            CleanUp();
+            RemoveSingleNeighbor();
             DrawMap();
         }
     }
@@ -66,10 +67,13 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < iterations; i++)
         {
             SmoothMap();
+            RemoveSingleNeighbor();
         }
 
         CleanUp();
+        RemoveSingleNeighbor();
         IndentifyCaverns();
+        RemoveSingleNeighbor();
         SetEntrance();
     }
 
@@ -409,33 +413,42 @@ public class MapGenerator : MonoBehaviour
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
-    private void CleanUp()
+    private void RemoveSingleNeighbor()
     {
         int sum = 0;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (x-1 > 0 && x +1 <width && y-1 >0 && y+1 <height)
+                if (map[x, y] == 1 && x - 1 > 0 && x + 1 < width && y - 1 > 0 && y + 1 < height)
                 {
-                    sum = 0;
-                    if (map[x, y] == 1)
+                    sum = map[x - 1, y] + map[x + 1, y] + map[x, y - 1] + map[x, y + 1];
+                    if (sum <= 1)
                     {
-                        sum = map[x - 1, y] + map[x + 1, y] + map[x, y - 1] + map[x, y + 1];
-                        if (sum == 1)
-                        {
-                            map[x, y] = 0;
-                        }
+                        map[x, y] = 0;
                     }
-                    //if (map[x,y] == 1 && Test(x,y) == 1)
-                    //{
-                    //    map[x-1, y] = 1;
-                    //    map[x +1, y] = 1;
-                    //}
-                    if (map[x,y] == 1 && map[x,y-1] == 0)
+                    if (map[x, y] == 1 && Test(x, y) == 1)
+                    {
+                        map[x, y - 1] = 0;
+                        map[x, y + 1] = 0;
+                    }
+                }
+            }
+        }
+    }
+    private void CleanUp()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (x-1 > 0 && x +1 <width && y-1 >0 && y+1 <height)
+                {               
+                    if (map[x, y] == 1 && map[x, y - 1] == 0)
                     {
                         ThickenWalls(x, y);
                     }
+                    //RemoveSingleNeighbor();
                 }
             }
         }
@@ -443,11 +456,11 @@ public class MapGenerator : MonoBehaviour
     private int Test(int tileX, int tileY)
     {
         int sum = 0;
-        for (int x = tileX-2; x <= tileX+2; x++)
+        for (int y = tileY-2; y <= tileY+2; y++)
         {
-            if (IsInMapRange(x, tileY) && x != tileX)
+            if (IsInMapRange(tileX, y) && y != tileY)
             {
-                sum += map[x, tileY];
+                sum += map[tileX, y];
             }
         }
         return sum;
@@ -494,14 +507,14 @@ public class MapGenerator : MonoBehaviour
     {
         RuleTile wallTile = wallTiles as RuleTile;
         RuleTile entranceTile = entranceTiles as RuleTile;
-        
+        RuleTile groundTile = groundTiles as RuleTile;
+
         if (map != null)
         {
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Vector3Int tile = new Vector3Int(x, y);
                     if (map[x,y] == 1)
                     {
                         WallTilemap.SetTile(new Vector3Int(x,y), wallTile);
@@ -514,6 +527,6 @@ public class MapGenerator : MonoBehaviour
                 WallTilemap.SetTile(entrance[i], entranceTile);
             }
         }
-        //player = Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
+        player = Instantiate(playerPrefab,new Vector3(spawnPoint.x,spawnPoint.y,0),Quaternion.identity);
     }
 }
