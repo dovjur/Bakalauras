@@ -7,19 +7,26 @@ public class Compass : MonoBehaviour
     private GameObject player;
     private GameObject chest;
 
-    Vector3 position;
-    Vector3 destination;
+    Vector2 position;
+    Vector2 destination;
 
-    public void Set(GameObject player, GameObject chest)
+    private void Start()
     {
-        this.player = player;
-        this.chest = chest;
+        player = GameManager.Player;
+        chest = MapGenerator.Chest;
     }
 
     void Update()
     {
+        if (!chest.GetComponent<Animator>().GetBool("Open"))
+        {
+            destination = chest.transform.position;
+        }
+        else
+        {
+            destination = MapGenerator.spawnPoint;
+        }
         position = player.transform.position;
-        destination = chest.transform.position;
         float angle = Mathf.Atan2(destination.y - position.y, destination.x - position.x) * 180 / Mathf.PI;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, angle - 90), 1f);
     }
