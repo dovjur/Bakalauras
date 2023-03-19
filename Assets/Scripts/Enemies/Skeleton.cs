@@ -6,12 +6,15 @@ public class Skeleton : Enemy
 {
     [SerializeField]
     private GameObject coinPrefab;
+    [SerializeField]
+    private Projectile projectilePrefab;
 
     private Transform target;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
     private int coinCount;
+    private float timeBtwAttacks;
 
     void Start()
     {
@@ -19,6 +22,7 @@ public class Skeleton : Enemy
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         coinCount = Random.Range(0,5);
+        timeBtwAttacks = attackSpeed;
     }
     private void Update()
     {
@@ -50,9 +54,14 @@ public class Skeleton : Enemy
             ChangeState(EnemyState.walking);
             movement = target.position - transform.position;
         }
-        if (distance <= attackRadius && currentState != EnemyState.attacking)
+        if (distance <= attackRadius && timeBtwAttacks <= 0)
         {
-            //StartCoroutine(AttackCoroutine());
+            StartCoroutine(AttackCoroutine());
+            timeBtwAttacks = attackSpeed;
+        }
+        else
+        {
+            timeBtwAttacks -= Time.deltaTime;
         }
     }
     private void ChangeState(EnemyState newState)
@@ -79,9 +88,10 @@ public class Skeleton : Enemy
     {
         ChangeState(EnemyState.attacking);
         animator.SetBool("IsAttacking", true);
+        Instantiate(projectilePrefab,transform.position,Quaternion.identity);
         yield return null;
         animator.SetBool("IsAttacking", false);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
         ChangeState(EnemyState.walking);
     }
 
@@ -97,6 +107,5 @@ public class Skeleton : Enemy
             Instantiate(coinPrefab, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
-        
     }
 }

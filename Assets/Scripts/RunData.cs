@@ -21,11 +21,16 @@ public class RunData
         }
     }
 
-    public int coinsCollected = 0;
-    public int enemiesKilled = 0;
+    private int coinsCollected = 0;
+    private int enemiesKilled = 0;
 
     public void AddCoins()
     {
         coinsCollected++;
+    }
+
+    public int GetCoins()
+    {
+        return coinsCollected;
     }
 }

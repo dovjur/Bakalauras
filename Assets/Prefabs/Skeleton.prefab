@@ -202,3 +202,4 @@ MonoBehaviour:
   attackRadius: 3
   currentState: 0
   coinPrefab: {fileID: 9053335762604902473, guid: bb0c65591f8faf44e9dcd61ed7854c24, type: 3}
+  projectilePrefab: {fileID: -3313553667363862336, guid: d7b34abc020226f4dac21522188f4a7b, type: 3}

@@ -13,6 +13,6 @@ public class GameUI : MonoBehaviour
     }
     private void UpdateCoinCount()
     {
-        coinsCollected.text = RunData.current.coinsCollected.ToString();
+        coinsCollected.text = RunData.current.GetCoins().ToString();
     }
 }
