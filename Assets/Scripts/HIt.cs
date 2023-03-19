@@ -6,9 +6,14 @@ public class HIt : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            other.GetComponent<Enemy>().TakeDamage(1);
+            damageable.TakeDamage(1);
+        }
+        if (other.CompareTag("Breakable"))
+        {
+            other.GetComponent<BreakableObject>().Break();
         }
     }
 }

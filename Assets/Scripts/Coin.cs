@@ -9,6 +9,10 @@ public class Coin : MonoBehaviour
     public static event CoinCollected onCoinCollected;
 
     public bool isMagnetOn = false;
+
+    [SerializeField]
+    private GameObject prefab;
+
     private Rigidbody2D rb;
     private Transform target;
     private float delay = 1;
@@ -30,7 +34,7 @@ public class Coin : MonoBehaviour
         if (delay >= pastTime)
         {
             pastTime += Time.deltaTime;
-            transform.position += offset * Time.deltaTime;
+            rb.MovePosition(transform.position + offset * Time.deltaTime);
         }
 
         if (isMagnetOn)
@@ -48,5 +52,13 @@ public class Coin : MonoBehaviour
             onCoinCollected();
             Destroy(gameObject);
         }
+    }
+
+    public void SpawnCoins(int count, Transform transform)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Instantiate(prefab, transform.position, Quaternion.identity);
+        }    
     }
 }

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
-    private int maxHealth = 3;
+    private int maxHealth;
     private int currentHealh;
-    private float speed;
+    private float moveSpeed;
+    private float attackSpeed;
     void Start()
     {
         

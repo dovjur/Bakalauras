@@ -19,8 +19,11 @@ public class Enemy : MonoBehaviour
     public float attackRadius;
     public EnemyState currentState;
 
-    public void TakeDamage(int damage)
+    public void ChangeState(EnemyState newState)
     {
-        health -= damage;
+        if (currentState != newState)
+        {
+            currentState = newState;
+        }
     }
 }

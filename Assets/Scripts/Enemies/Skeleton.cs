@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : Enemy
+public class Skeleton : Enemy, IDamageable
 {
     [SerializeField]
-    private GameObject coinPrefab;
+    private Coin loot;
     [SerializeField]
-    private Projectile projectilePrefab;
+    private Projectile projectile;
+    [SerializeField]
+    private Collider2D objectCollider;
 
     private Transform target;
     private Rigidbody2D rb;
@@ -64,13 +66,6 @@ public class Skeleton : Enemy
             timeBtwAttacks -= Time.deltaTime;
         }
     }
-    private void ChangeState(EnemyState newState)
-    {
-        if (currentState != newState)
-        {
-            currentState = newState;
-        }
-    }
     private void UpdateAnimation()
     {
         if (movement != Vector2.zero)
@@ -88,7 +83,7 @@ public class Skeleton : Enemy
     {
         ChangeState(EnemyState.attacking);
         animator.SetBool("IsAttacking", true);
-        Instantiate(projectilePrefab,transform.position,Quaternion.identity);
+        projectile.SpawnProjectile(transform,damage,gameObject);
         yield return null;
         animator.SetBool("IsAttacking", false);
         yield return new WaitForSeconds(0.4f);
@@ -102,10 +97,11 @@ public class Skeleton : Enemy
         yield return null;
         animator.SetBool("IsDead", false);
         yield return new WaitForSeconds(1f);
-        for (int i = 0; i < coinCount; i++)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
-        }
+        loot.SpawnCoins(coinCount,transform);
         Destroy(gameObject);
+    }
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
     }
 }

@@ -6,25 +6,29 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
+    private Projectile prefab;
+    [SerializeField]
     private float movementSpeed;
     [SerializeField]
     private float rotationSpeed;
 
     private Transform player;
+    private GameObject shooter;
     private Vector3 target;
+    private int damage;
 
     void Start()
     {
         player = GameManager.Player.transform;
 
-        target = new Vector3 (player.position.x, player.position.y);
+        target = new Vector3(player.position.x, player.position.y);
     }
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position,target, movementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed * Time.deltaTime);
 
-        transform.Rotate(new Vector3(0,0,rotationSpeed));
+        transform.Rotate(new Vector3(0, 0, rotationSpeed));
 
         if (transform.position == target)
         {
@@ -32,12 +36,19 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject, .5f);
         }
     }
+    public void SpawnProjectile(Transform transform, int damage, GameObject shooter)
+    {
+        Projectile projectile = Instantiate(prefab,transform.position, Quaternion.identity);
+        projectile.shooter = shooter;
+        projectile.damage = damage;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null && !GameObject.ReferenceEquals(other.gameObject,shooter))
         {
-            Debug.Log("Deal damage");
+            damageable.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

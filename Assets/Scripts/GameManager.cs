@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject playerPrefab;
 
-    private static GameObject player;
+    private float timer = 0;
 
+    private static GameObject player;
     public static GameObject Player { get { return player; } }
 
     void Start()

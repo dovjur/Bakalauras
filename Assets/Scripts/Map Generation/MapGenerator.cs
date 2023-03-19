@@ -23,7 +23,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private ScriptableObject entranceTiles;
 
     [Header("Prefabs")]
-    [SerializeField] private GameObject lootChestPrefab;
+    [SerializeField] private GameObject chestPrefab;
+    [SerializeField] private GameObject barrelPrefab;
 
     private int[,] map;
     private int borderSize = 5;
@@ -38,6 +39,7 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
         DrawMap();
         SpawnLootChest();
+        //SpawnObjects(30);
         mainCamera.maxPosition = new Vector2(width-borderSize-1,height-borderSize);
     }
 
@@ -496,7 +498,16 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-        Chest = Instantiate(lootChestPrefab, lootCord, Quaternion.identity);
+        Chest = Instantiate(chestPrefab, lootCord, Quaternion.identity);
+    }
+
+    private void SpawnObjects(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Vector2 position = GetRandomGroundTile();
+            Instantiate(barrelPrefab,position,Quaternion.identity);
+        }
     }
 
     private void DrawMap()

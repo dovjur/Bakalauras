@@ -1732,5 +1732,6 @@ MonoBehaviour:
   wallTiles: {fileID: 11400000, guid: 56a1031d04e015141bf5468b796a01e2, type: 2}
   groundTiles: {fileID: 11400000, guid: 711c22bcd2ada1d4f956a8376d31d3b3, type: 2}
   entranceTiles: {fileID: 11400000, guid: 30bffd7d5a3d3e842a3b786988131ab9, type: 2}
-  lootChestPrefab: {fileID: 8744009739042437193, guid: f717b2ebd05e2c34aa2465c628c6db44, type: 3}
+  chestPrefab: {fileID: 8744009739042437193, guid: f717b2ebd05e2c34aa2465c628c6db44, type: 3}
+  barrelPrefab: {fileID: 6269636793308631945, guid: dc6983844de83094fae49ba5160d3ec1, type: 3}
   mainCamera: {fileID: 1828796934}
