@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -39,19 +40,8 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
         DrawMap();
         SpawnLootChest();
-        //SpawnObjects(30);
-        mainCamera.maxPosition = new Vector2(width-borderSize-1,height-borderSize);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GroundTilemap.ClearAllTiles();
-            WallTilemap.ClearAllTiles();
-            RemoveSingleNeighbor();
-            DrawMap();
-        }
+        SpawnObjects(30);
+        mainCamera.maxPosition = new Vector2(width - borderSize - 1, height - borderSize);
     }
 
     private void GenerateMap()
@@ -73,6 +63,10 @@ public class MapGenerator : MonoBehaviour
             RemoveSingleNeighbor();
         }
         SetEntrance();
+    }
+    public float GetProgressPercentage()
+    {
+        return (float)completedSteps / totalSteps * 100f;
     }
 
     private void RandomMapFill()
@@ -446,7 +440,6 @@ public class MapGenerator : MonoBehaviour
                     {
                         ThickenWalls(x, y);
                     }
-                    //RemoveSingleNeighbor();
                 }
             }
         }

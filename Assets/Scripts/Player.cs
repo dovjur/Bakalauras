@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    private int maxHealth;
     private int currentHealh;
-    private float moveSpeed;
-    private float attackSpeed;
+
     void Start()
     {
-        
+        currentHealh = SaveData.Instance.player.health;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
