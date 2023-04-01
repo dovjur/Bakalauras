@@ -23,4 +23,5 @@ public class SaveData
     }
 
     public PlayerData player = new PlayerData();
+    public Inventory Inventory = new Inventory();
 }

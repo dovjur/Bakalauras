@@ -59,7 +59,7 @@ public class RunData
     public void EndOfRun()
     {
         SaveData.Instance.player.coins += coinsCollected;
-        SaveLoadSystem.Save(SaveData.Instance.player);
+        SaveLoadSystem.Save(SaveData.Instance);
     }
 
     public void ResetInstance()

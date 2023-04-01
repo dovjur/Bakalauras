@@ -14,8 +14,6 @@ public class SceneLoadManager : MonoBehaviour
     public Slider progressBar;
 
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
-    private float totalSceneProgress;
-    private float totalMapProgess;
 
     private void Awake()
     {

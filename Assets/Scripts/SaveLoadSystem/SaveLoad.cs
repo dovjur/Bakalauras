@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -9,7 +11,7 @@ public class SaveLoadSystem
     private static string filePath = Application.persistentDataPath + "/saves/" + "GetBackAlive.save";
     public static void Save(object saveData)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatter = GetBinaryFormatter();
 
         if (!Directory.Exists(Application.persistentDataPath + "/saves"))
         {
@@ -17,7 +19,6 @@ public class SaveLoadSystem
         }
 
         FileStream file = File.Create(filePath);
-
         formatter.Serialize(file, saveData);
 
         file.Close();
@@ -30,7 +31,7 @@ public class SaveLoadSystem
             return null;
         }
 
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatter = GetBinaryFormatter();
 
         FileStream file = File.Open(filePath, FileMode.Open);
 
@@ -40,12 +41,26 @@ public class SaveLoadSystem
             file.Close();
             return save;
         }
-        catch
+        catch(Exception e)
         {
-            Debug.LogErrorFormat("Failed to load file at {0}", file);
+            Debug.LogErrorFormat("Failed to load file at {0}: {1}", file, e);
             file.Close();
             return null;
         }
     }
 
+    public static BinaryFormatter GetBinaryFormatter()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        SurrogateSelector surrogateSelector = new SurrogateSelector();
+
+        DictionarySerializationSurrogate<ItemObject,InventoryItem> dictionarySurrogate = new DictionarySerializationSurrogate<ItemObject, InventoryItem>();
+
+        surrogateSelector.AddSurrogate(typeof(Dictionary<ItemObject, InventoryItem>),new StreamingContext(StreamingContextStates.All), dictionarySurrogate);
+
+        formatter.SurrogateSelector = surrogateSelector;
+
+        return formatter;
+    }
 }

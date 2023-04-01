@@ -9,8 +9,8 @@ public enum PlayerState
 }
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float attackSpeed = .5f;
+    public float moveSpeed;
+    public float attackSpeed;
 
     private PlayerState state;
     private Rigidbody2D rb;
@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         state = PlayerState.walking;
+        moveSpeed = SaveData.Instance.player.moveSpeed;
+        attackSpeed = SaveData.Instance.player.attackSpeed;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         animator.SetFloat("Horizontal",0);

@@ -64,11 +64,6 @@ public class MapGenerator : MonoBehaviour
         }
         SetEntrance();
     }
-    public float GetProgressPercentage()
-    {
-        return (float)completedSteps / totalSteps * 100f;
-    }
-
     private void RandomMapFill()
     {
         System.Random rng = new System.Random();

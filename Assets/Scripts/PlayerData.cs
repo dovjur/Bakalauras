@@ -12,7 +12,7 @@ public class PlayerData
 
     public PlayerData()
 	{
-		coins = 0;
+		coins = 100;
 		health = 3;
 		moveSpeed = 5;
 		attackSpeed = 5;

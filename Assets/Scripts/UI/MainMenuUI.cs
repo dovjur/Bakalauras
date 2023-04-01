@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static ShopManager;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -27,12 +28,16 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
-        SaveData.Instance.player = (PlayerData)SaveLoadSystem.Load();
+        SaveData.Instance = (SaveData)SaveLoadSystem.Load();
+        onCoinsSpend += UpdateCoinUI;
         UpdateUIAfterRun();
     }
     public void Play()
     {
-        RunData.current.ResetInstance();
+        if (RunData.current != null)
+        {
+            RunData.current.ResetInstance();
+        }
         SceneLoadManager.instance.LoadGame();
     }
 
@@ -43,11 +48,16 @@ public class MainMenuUI : MonoBehaviour
 
     public void UpdateUIAfterRun()
     {
-        coinCount.text = SaveData.Instance.player.coins.ToString();
+        UpdateCoinUI();
 
         runCoins.text += RunData.current.GetCoins().ToString();
         runKills.text += RunData.current.GetKills().ToString();
         runTime.text += RunData.current.GetTime().ToString();
+    }
+
+    public void UpdateCoinUI()
+    {
+        coinCount.text = SaveData.Instance.player.coins.ToString();
     }
 
     public void ChangePanel(GameObject button)
