@@ -172,3 +172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2516c105ea6dba4e8766cd081ff99cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootCards:
+  - {fileID: 11400000, guid: d7d22e173f9980149965fd9fc9c70c77, type: 2}
+  - {fileID: 11400000, guid: f7c2d190e938a8b438de66e767c569a4, type: 2}
+  - {fileID: 11400000, guid: 16c8453f7b23136478f958b76ef650d6, type: 2}
+  - {fileID: 11400000, guid: d05f0b79ca2627b428b9d2f35269c595, type: 2}
+  LootCard: {fileID: 0}

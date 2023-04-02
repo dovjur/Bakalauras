@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
-  m_Name: New Loot Card
+  m_Name: New Loot Card 3
   m_EditorClassIdentifier: 
   lootSprite: {fileID: 0}
-  lootName: qwwer
-  dropChance: 80
+  lootName: sssss
+  dropChance: 30

@@ -4,25 +4,68 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField]
+    private List<LootCard> lootCards = new List<LootCard>();
 
-    // Start is called before the first frame update
+    private Animator animator;
+    private bool isInRange;
+
+    public LootCard LootCard;
+
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E) && isInRange)
+        {
+            OpenChest();
+        }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OpenChest()
     {
-        if (other.CompareTag("Player") && Input.GetKey(KeyCode.E))
+        animator.SetBool("Open", true);
+        LootCard = GetDroppedLoot();
+    }
+
+    private LootCard GetDroppedLoot()
+    {
+        int randomNumber = Random.Range(1, 101);
+        Debug.Log(randomNumber);
+        List<LootCard> possibleLoot = new List<LootCard>();
+        foreach (LootCard lootCard in lootCards)
         {
-            animator.SetBool("Open", true);
+            if (randomNumber <= lootCard.dropChance)
+            {
+                possibleLoot.Add(lootCard);
+            }
+        }
+        if (possibleLoot.Count > 0)
+        {
+            LootCard droppedCard = possibleLoot[Random.Range(0, possibleLoot.Count)];
+            Debug.Log(droppedCard);
+            return droppedCard;
+        }
+
+        return null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isInRange = false;
         }
     }
 }

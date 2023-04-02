@@ -9,6 +9,7 @@ public class PlayerData
     public int health;
     public float moveSpeed;
     public float attackSpeed;
+	public int strength;
 
     public PlayerData()
 	{
@@ -16,30 +17,6 @@ public class PlayerData
 		health = 3;
 		moveSpeed = 5;
 		attackSpeed = 5;
-	}
-
-	public int GetCoins()
-	{
-		return coins;
-	}
-
-	public void AddCoins(int amount)
-	{
-		coins += amount;
-	}
-
-	public int GetHealth()
-	{
-		return health;
-	}
-
-	public float GetMoveSpeed()
-	{
-		return moveSpeed;
-	}
-
-	public float GetAttackSpeed()
-	{
-		return attackSpeed;
+        strength = 5;
 	}
 }

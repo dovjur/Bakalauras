@@ -29,9 +29,19 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         SaveData.Instance = (SaveData)SaveLoadSystem.Load();
-        onCoinsSpend += UpdateCoinUI;
         UpdateUIAfterRun();
     }
+
+    private void OnEnable()
+    {
+        onCoinsSpend += UpdateCoinUI;
+    }
+
+    private void OnDisable()
+    {
+        onCoinsSpend -= UpdateCoinUI;
+    }
+
     public void Play()
     {
         if (RunData.current != null)
