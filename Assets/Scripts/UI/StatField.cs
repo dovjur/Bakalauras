@@ -4,6 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Stat
+{
+    Health,
+    MoveSpeed,
+    AttackSpeed,
+    Strength
+}
 public class StatField : MonoBehaviour
 {
     [SerializeField]
@@ -15,13 +22,43 @@ public class StatField : MonoBehaviour
     [SerializeField]
     private CommandManager commandManager;
 
-    private int statValue = 0;
+    public Stat stat;
 
     private void Start()
     {
-        statValue = SaveData.Instance.player.health;
         decreaseButton.SetActive(false);
-        statValueText.text = statValue.ToString();
+        if (!SaveData.Instance.player.IsStatMaxed(stat))
+        {
+            increaseButton.SetActive(true);
+        }
+    }
+    private void OnEnable()
+    {
+        LoadStat();
+    }
+
+    private void OnDisable()
+    {
+        ResetStat();
+    }
+
+    private void LoadStat()
+    {
+        switch (stat)
+        {
+            case Stat.Health:
+                statValueText.text = SaveData.Instance.player.health.ToString();
+                break;
+            case Stat.MoveSpeed:
+                statValueText.text = SaveData.Instance.player.moveSpeed.ToString();
+                break;
+            case Stat.AttackSpeed:
+                statValueText.text = SaveData.Instance.player.attackSpeed.ToString();
+                break;
+            case Stat.Strength:
+                statValueText.text = SaveData.Instance.player.strength.ToString();
+                break;
+        }
     }
 
     public void IncreaseStat(string stat)
@@ -31,19 +68,26 @@ public class StatField : MonoBehaviour
             case "Health":
                 commandManager.ExecuteCommand(new UpgradeHealhtCommand(statValueText));
                 break;
-            case "Movespeed":
+            case "MoveSpeed":
                 commandManager.ExecuteCommand(new UpgradeMoveSpeedCommand(statValueText));
                 break;
             case "Strength":
                 commandManager.ExecuteCommand(new UpgradeStrengthCommand(statValueText));
                 break;
             case "AttackSpeed":
-                commandManager.ExecuteCommand(new UpgradeAttackSpeedCommand(statValueText));        
+                commandManager.ExecuteCommand(new UpgradeAttackSpeedCommand(statValueText));
                 break;
             default:
                 break;
         }
+
         decreaseButton.SetActive(true);
+
+        if (SaveData.Instance.player.IsStatMaxed(this.stat))
+        {
+            increaseButton.SetActive(false);
+        }
+
     }
 
     public void DecreaseStat()
@@ -53,5 +97,25 @@ public class StatField : MonoBehaviour
         {
             decreaseButton.SetActive(false);
         }
+        if (!SaveData.Instance.player.IsStatMaxed(stat))
+        {
+            increaseButton.SetActive(true);
+        }
+    }
+
+    public void ResetStat()
+    {
+        while (commandManager.GetHistoryCount() > 0)
+        {
+            commandManager.UndoCommand();
+        }
+        decreaseButton.SetActive(false);
+    }
+
+    public void SaveStat()
+    {
+        SaveLoadSystem.Save(SaveData.Instance);
+        commandManager.ClearHistory();
+        decreaseButton.SetActive(false);
     }
 }

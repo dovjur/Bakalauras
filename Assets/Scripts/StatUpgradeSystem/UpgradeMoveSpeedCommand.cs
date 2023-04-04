@@ -15,11 +15,13 @@ public class UpgradeMoveSpeedCommand : ICommand
 	{
 		SaveData.Instance.player.moveSpeed++;
         statValue.text = SaveData.Instance.player.moveSpeed.ToString();
+        StatManager.upgradePrice += SaveData.Instance.player.moveSpeed * 100;
     }
 
 	public void UndoCommand()
 	{
-		SaveData.Instance.player.moveSpeed--;
-        statValue.text = SaveData.Instance.player.moveSpeed.ToString();
+        StatManager.upgradePrice -= SaveData.Instance.player.moveSpeed * 100;
+        SaveData.Instance.player.moveSpeed--;
+        statValue.text = SaveData.Instance.player.moveSpeed.ToString();   
     }
 }

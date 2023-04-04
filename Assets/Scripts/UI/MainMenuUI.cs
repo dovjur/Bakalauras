@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static ShopManager;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -26,20 +25,25 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Sprite whiteButton;
     [SerializeField] private Sprite brownButton;
 
-    private void Start()
+    private void Awake()
     {
         SaveData.Instance = (SaveData)SaveLoadSystem.Load();
+    }
+    private void Start()
+    {
         UpdateUIAfterRun();
     }
 
     private void OnEnable()
     {
-        onCoinsSpend += UpdateCoinUI;
+        ShopManager.onCoinsSpend += UpdateCoinUI;
+        StatManager.onStatsUpgraded += UpdateCoinUI;
     }
 
     private void OnDisable()
     {
-        onCoinsSpend -= UpdateCoinUI;
+        ShopManager.onCoinsSpend -= UpdateCoinUI;
+        StatManager.onStatsUpgraded -= UpdateCoinUI;
     }
 
     public void Play()

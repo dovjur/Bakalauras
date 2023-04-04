@@ -24,4 +24,9 @@ public class CommandManager : MonoBehaviour
     {
         return historyStack.Count;
     }
+
+    public void ClearHistory()
+    {
+        historyStack.Clear();
+    }
 }

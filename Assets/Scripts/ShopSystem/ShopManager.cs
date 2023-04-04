@@ -22,7 +22,16 @@ public class ShopManager : MonoBehaviour
         inventoryItems = SaveData.Instance.Inventory.inventory;
         LoadItems();
         CanBePurchased();
+    }
+
+    private void OnEnable()
+    {
         ShopTemplate.onItemPurchased += Purchase;
+    }
+
+    private void OnDisable()
+    {
+        ShopTemplate.onItemPurchased -= Purchase;
     }
 
     private void CanBePurchased()

@@ -14,10 +14,12 @@ public class UpgradeHealhtCommand : ICommand
     {
         SaveData.Instance.player.health++;
         statValue.text = SaveData.Instance.player.health.ToString();
+        StatManager.upgradePrice += SaveData.Instance.player.health * 100;
     }
 
     public void UndoCommand()
     {
+        StatManager.upgradePrice -= SaveData.Instance.player.health * 100;
         SaveData.Instance.player.health--;
         statValue.text = SaveData.Instance.player.health.ToString();
     }

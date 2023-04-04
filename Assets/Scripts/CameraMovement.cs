@@ -12,7 +12,7 @@ public class CameraMovement : MonoBehaviour
     private Transform target;
     public Vector2 maxPosition;
 
-    private void Update()
+    private void Start()
     {
         if (target == null)
         {

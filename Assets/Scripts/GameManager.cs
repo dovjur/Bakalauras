@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private static GameObject player;
     public static GameObject Player { get { return player; } }
 
-    void Start()
+    void Awake()
     {
         player = Instantiate(playerPrefab,mapGenerator.GetSpawnPoint(),Quaternion.identity);
     }
