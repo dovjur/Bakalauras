@@ -14,4 +14,8 @@ public class CollectionPanel : MonoBehaviour
     {
         collectionTitle.text = name;
     }
+    public GameObject GetPanel()
+    {
+        return contentPanel;
+    }
 }

@@ -9,10 +9,12 @@ public class LootCard : ScriptableObject
     public string lootName;
     [Range(0f, 100f)]
     public int dropChance;
+    public bool isUnlocked;
 
     public LootCard(string lootName, int dropChance)
     {
         this.lootName = lootName;
         this.dropChance = dropChance;
+        this.isUnlocked = false;
     }
 }

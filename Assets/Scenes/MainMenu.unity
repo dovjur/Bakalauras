@@ -6698,6 +6698,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d074bbf9cbb2bd43af60fee4ed3f52e, type: 2}
   - {fileID: 11400000, guid: 656e4edfc273cef41935b8d1fb3f7497, type: 2}
   pagePanelPrefab: {fileID: 8171444234391074732, guid: 0788d5b48d09e6e4c893c8c6946a9a31, type: 3}
+  cardPrefab: {fileID: 1373561521001005750, guid: 69e9a9311b00db9418fe0b786c745fa2, type: 3}
   leftPanelParent: {fileID: 1532805029}
   rightPanelParent: {fileID: 1222779473}
   prevButton: {fileID: 1881633698}

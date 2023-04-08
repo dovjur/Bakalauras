@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
   m_Name: New Loot Card 1
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: 0}
+  lootSprite: {fileID: -460290213, guid: 75c9e6366e6fc7942ac49659029bc789, type: 3}
   lootName: aaaaa
-  dropChance: 50
+  dropChance: 100
+  isUnlocked: 0

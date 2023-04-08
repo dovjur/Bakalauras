@@ -10,6 +10,7 @@ public class CollectionDisplay : MonoBehaviour
     private List<GameObject> pagePanels = new List<GameObject>();
 
     public GameObject pagePanelPrefab;
+    public CollectionTemplate cardPrefab;
     public Transform leftPanelParent;
     public Transform rightPanelParent;
 
@@ -22,6 +23,7 @@ public class CollectionDisplay : MonoBehaviour
         {
             GameObject leftPagePanel = Instantiate(pagePanelPrefab, leftPanelParent);
             PopulatePage(leftPagePanel, i);
+
             pagePanels.Add(leftPagePanel);
             leftPagePanel.SetActive(false);
 
@@ -67,17 +69,12 @@ public class CollectionDisplay : MonoBehaviour
         nextButton.SetActive(pageIndex < pagePanels.Count - 2);
     }
 
-    private void PopulatePage(GameObject pagePanel, int startIndex)
+    private void PopulatePage(GameObject pagePanel, int index)
     {
-        int endIndex = Mathf.Min(startIndex + 1, collections.Count - 1);
+        Collection collection = collections[index];
 
-        for (int i = startIndex; i <= endIndex; i++)
-        {
-            Collection collection = collections[i];
-
-            CollectionPanel collectionPanel = pagePanel.GetComponentInChildren<CollectionPanel>();
-            PopulatePanel(collectionPanel, collection);
-        }
+        CollectionPanel collectionPanel = pagePanel.GetComponentInChildren<CollectionPanel>();
+        PopulatePanel(collectionPanel, collection);
     }
 
     private void PopulatePanel(CollectionPanel panel, Collection collection)
@@ -86,9 +83,9 @@ public class CollectionDisplay : MonoBehaviour
 
         foreach (LootCard lootCard in collection.collectionCards)
         {
-            //GameObject cardObject = Instantiate(cardPrefab, panel.contentPanel.transform);
-            //cardObject.GetComponent<Card>().SetName(lootCard.cardName);
-            //cardObject.GetComponent<Card>().SetImage(lootCard.cardImage);
+            CollectionTemplate cardObject = Instantiate(cardPrefab, panel.GetPanel().transform);
+            //cardObject.SetTitle(lootCard.lootName);
+            cardObject.SetSprite(lootCard.lootSprite, lootCard.isUnlocked);
         }
     }
 }

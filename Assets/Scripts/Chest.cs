@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    [SerializeField]
-    private List<LootCard> lootCards = new List<LootCard>();
+    public delegate void ChestOpened();
+    public static event ChestOpened onChestOpened;
 
     private Animator animator;
     private bool isInRange;
-
-    public LootCard LootCard;
 
     void Start()
     {
@@ -28,29 +26,7 @@ public class Chest : MonoBehaviour
     private void OpenChest()
     {
         animator.SetBool("Open", true);
-        LootCard = GetDroppedLoot();
-    }
-
-    private LootCard GetDroppedLoot()
-    {
-        int randomNumber = Random.Range(1, 101);
-        Debug.Log(randomNumber);
-        List<LootCard> possibleLoot = new List<LootCard>();
-        foreach (LootCard lootCard in lootCards)
-        {
-            if (randomNumber <= lootCard.dropChance)
-            {
-                possibleLoot.Add(lootCard);
-            }
-        }
-        if (possibleLoot.Count > 0)
-        {
-            LootCard droppedCard = possibleLoot[Random.Range(0, possibleLoot.Count)];
-            Debug.Log(droppedCard);
-            return droppedCard;
-        }
-
-        return null;
+        onChestOpened?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
