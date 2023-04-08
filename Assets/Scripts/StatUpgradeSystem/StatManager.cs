@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +10,29 @@ public class StatManager : MonoBehaviour
     public static event StatsUpgraded onStatsUpgraded;
 
     [SerializeField]
+    private TextMeshProUGUI upgradePriceText;
+    [SerializeField]
+    private GameObject upgradePanel;
+    [SerializeField]
     private List<StatField> stats = new List<StatField>();
 
     public static int upgradePrice = 0;
+    private void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        if (upgradePrice > 0)
+        {
+            upgradePanel.SetActive(true);
+            upgradePriceText.text = upgradePrice.ToString();
+        }
+        else
+        {
+            upgradePanel.SetActive(false);
+        }
+    }
 
     public void SaveStats()
     {
@@ -34,8 +55,6 @@ public class StatManager : MonoBehaviour
 
     public void ResetStats()
     {
-        upgradePrice = 0;
-
         foreach (StatField stat in stats)
         {
             stat.ResetStat();

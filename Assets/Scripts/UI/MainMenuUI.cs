@@ -48,9 +48,9 @@ public class MainMenuUI : MonoBehaviour
 
     public void Play()
     {
-        if (RunData.current != null)
+        if (SaveData.Instance.runData != null)
         {
-            RunData.current.ResetInstance();
+            SaveData.Instance.runData.ResetRun();
         }
         SceneLoadManager.instance.LoadGame();
     }
@@ -64,9 +64,9 @@ public class MainMenuUI : MonoBehaviour
     {
         UpdateCoinUI();
 
-        runCoins.text += RunData.current.GetCoins().ToString();
-        runKills.text += RunData.current.GetKills().ToString();
-        runTime.text += RunData.current.GetTime().ToString();
+        runCoins.text += SaveData.Instance.runData.GetCoins().ToString();
+        runKills.text += SaveData.Instance.runData.GetKills().ToString();
+        runTime.text += SaveData.Instance.runData.GetTime().ToString();
     }
 
     public void UpdateCoinUI()

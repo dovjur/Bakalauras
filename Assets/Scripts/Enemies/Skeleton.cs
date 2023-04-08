@@ -98,7 +98,7 @@ public class Skeleton : Enemy, IDamageable
         animator.SetBool("IsDead", false);
         yield return new WaitForSeconds(1f);
         loot.SpawnCoins(coinCount,transform);
-        RunData.current.AddKill();
+        SaveData.Instance.runData.AddKill();
         Destroy(gameObject);
     }
     public void TakeDamage(int damage)

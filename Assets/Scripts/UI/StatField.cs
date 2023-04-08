@@ -26,7 +26,6 @@ public class StatField : MonoBehaviour
 
     private void Start()
     {
-        decreaseButton.SetActive(false);
         if (!SaveData.Instance.player.IsStatMaxed(stat))
         {
             increaseButton.SetActive(true);
@@ -110,6 +109,10 @@ public class StatField : MonoBehaviour
             commandManager.UndoCommand();
         }
         decreaseButton.SetActive(false);
+        if (!SaveData.Instance.player.IsStatMaxed(stat))
+        {
+            increaseButton.SetActive(true);
+        }
     }
 
     public void SaveStat()

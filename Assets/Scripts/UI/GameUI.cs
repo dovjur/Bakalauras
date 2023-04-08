@@ -12,17 +12,13 @@ public class GameUI : MonoBehaviour
     private void OnEnable()
     {
         Coin.onCoinCollected += UpdateCoinCount;
-        Player.onHealthChange += UpdateInt;
     }
     private void OnDisable()
     {
         Coin.onCoinCollected -= UpdateCoinCount;
-        Player.onHealthChange -= UpdateInt;
     }
     private void UpdateCoinCount()
     {
-        coinsCollected.text = RunData.current.GetCoins().ToString();
+        coinsCollected.text = SaveData.Instance.runData.GetCoins().ToString();
     }
-
-    private void UpdateInt(int aaa) { }
 }

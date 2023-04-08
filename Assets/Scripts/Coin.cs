@@ -48,7 +48,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            RunData.current.AddCoin();
+            SaveData.Instance.runData.AddCoin();
             onCoinCollected();
             Destroy(gameObject);
         }
