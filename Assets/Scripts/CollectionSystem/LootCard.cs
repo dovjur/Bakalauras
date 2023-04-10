@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class LootCard : ScriptableObject
+[Serializable]
+public class LootCard : ScriptableObject, ISerializable
 {
     public Sprite lootSprite;
     public string lootName;
@@ -11,10 +15,15 @@ public class LootCard : ScriptableObject
     public int dropChance;
     public bool isUnlocked;
 
-    public LootCard(string lootName, int dropChance)
+    public void GetObjectData(SerializationInfo info, StreamingContext context)
     {
-        this.lootName = lootName;
-        this.dropChance = dropChance;
-        this.isUnlocked = false;
+        info.AddValue("name", lootName);
+        info.AddValue("unlocked", isUnlocked);
+    }
+
+    protected LootCard(SerializationInfo info, StreamingContext context)
+    {
+        lootName = info.GetString("name");
+        isUnlocked = info.GetBoolean("unlocked");
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
+  m_Name: Jewelry
+  m_EditorClassIdentifier: 
+  collectionName: Jewelry
+  collectionCards:
+  - {fileID: 11400000, guid: 4d17063a0efcc2a4a884df246249a016, type: 2}
+  - {fileID: 11400000, guid: 2ae3dc974208d00429a56a887239437a, type: 2}
+  - {fileID: 11400000, guid: 8a354d7d62f7ca049a928095e09f20d6, type: 2}
+  - {fileID: 11400000, guid: e5a8f5fb66f6ce64fa9f6e08a52f0635, type: 2}
+  - {fileID: 11400000, guid: ebabc639606cf9b4c8403f864333cc5c, type: 2}
+  - {fileID: 11400000, guid: 05b342e0416391a4da710d763d115ab5, type: 2}

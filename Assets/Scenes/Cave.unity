@@ -1111,7 +1111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1056223909}
   - component: {fileID: 1056223910}
-  - component: {fileID: 1056223911}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1149,28 +1148,6 @@ MonoBehaviour:
   mapGenerator: {fileID: 2022739448}
   enemySpawner: {fileID: 1460725882}
   playerPrefab: {fileID: 7167095233449205071, guid: efc918f86f4ca7f44b6063b0706ba097, type: 3}
---- !u!114 &1056223911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056223908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d28c4979eca78442b126af32a290bc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lootCards:
-  - {fileID: 11400000, guid: d7d22e173f9980149965fd9fc9c70c77, type: 2}
-  - {fileID: 11400000, guid: f7c2d190e938a8b438de66e767c569a4, type: 2}
-  - {fileID: 11400000, guid: 16c8453f7b23136478f958b76ef650d6, type: 2}
-  - {fileID: 11400000, guid: d05f0b79ca2627b428b9d2f35269c595, type: 2}
-  collections:
-  - {fileID: 11400000, guid: 2d074bbf9cbb2bd43af60fee4ed3f52e, type: 2}
-  - {fileID: 11400000, guid: 656e4edfc273cef41935b8d1fb3f7497, type: 2}
-  - {fileID: 11400000, guid: 6ec1c64d637797840bf863dd47e369e1, type: 2}
-  - {fileID: 11400000, guid: b45def0cd3f8c6a429494139f24837c1, type: 2}
 --- !u!1 &1267739864
 GameObject:
   m_ObjectHideFlags: 0

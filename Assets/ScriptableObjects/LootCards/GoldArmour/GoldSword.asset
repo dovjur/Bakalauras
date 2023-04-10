@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
-  m_Name: New Loot Card 2
+  m_Name: GoldSword
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: -1766458372, guid: 75c9e6366e6fc7942ac49659029bc789, type: 3}
-  lootName: bbbbb
-  dropChance: 70
+  lootSprite: {fileID: 2122780513, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
+  lootName: Golden Sword
+  dropChance: 25
+  isUnlocked: 0

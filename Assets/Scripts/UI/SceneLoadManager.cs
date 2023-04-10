@@ -11,8 +11,6 @@ public class SceneLoadManager : MonoBehaviour
     [SerializeField]
     private GameObject loadingScreen;
 
-    public Slider progressBar;
-
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
     private void Awake()

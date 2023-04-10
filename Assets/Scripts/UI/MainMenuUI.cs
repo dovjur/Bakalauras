@@ -15,23 +15,25 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI runKills;
     [SerializeField] private TextMeshProUGUI runTime;
 
-    [Header("Panels")]
-    [SerializeField] private List<GameObject> panels;
+    [SerializeField]
+    private GameObject menuPanel;
+    [SerializeField]
+    private GameObject gamePanel;
 
-    [Header("Panels Buttons")]
-    [SerializeField] private List<GameObject> buttons;
-
-    [Header("Button Sprites")]
-    [SerializeField] private Sprite whiteButton;
-    [SerializeField] private Sprite brownButton;
+    private static bool isGameStarted;
 
     private void Awake()
     {
         SaveData.Instance = (SaveData)SaveLoadSystem.Load();
+        Debug.Log(SaveData.Instance.lootCards);
     }
     private void Start()
     {
         UpdateUIAfterRun();
+        if (isGameStarted)
+        {
+            EnableGamePanel();
+        }
     }
 
     private void OnEnable()
@@ -53,7 +55,10 @@ public class MainMenuUI : MonoBehaviour
             SaveData.Instance.runData.ResetRun();
         }
         SceneLoadManager.instance.LoadGame();
+        isGameStarted = true;
     }
+
+
 
     public void Exit()
     {
@@ -69,25 +74,15 @@ public class MainMenuUI : MonoBehaviour
         runTime.text += SaveData.Instance.runData.GetTime().ToString();
     }
 
+    public void EnableGamePanel()
+    {
+        menuPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        isGameStarted = false;
+    }
+
     public void UpdateCoinUI()
     {
         coinCount.text = SaveData.Instance.player.coins.ToString();
-    }
-
-    public void ChangePanel(GameObject button)
-    {
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            if (button == buttons[i])
-            {
-                buttons[i].GetComponent<Image>().sprite = whiteButton;
-                panels[i].SetActive(true);
-            }
-            else
-            {
-                buttons[i].GetComponent<Image>().sprite = brownButton;
-                panels[i].SetActive(false);
-            }
-        }
     }
 }

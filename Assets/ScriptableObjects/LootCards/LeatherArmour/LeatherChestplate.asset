@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
-  m_Name: New Loot Card 1
+  m_Name: LeatherChestplate
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: -460290213, guid: 75c9e6366e6fc7942ac49659029bc789, type: 3}
-  lootName: aaaaa
+  lootSprite: {fileID: 1867572019, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
+  lootName: Leather Chestplate
   dropChance: 100
   isUnlocked: 0

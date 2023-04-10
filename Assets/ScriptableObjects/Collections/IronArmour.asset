@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
-  m_Name: New Collection
+  m_Name: IronArmour
   m_EditorClassIdentifier: 
-  collectionName: aaaa
+  collectionName: Iron Armour
   collectionCards:
-  - {fileID: 11400000, guid: d7d22e173f9980149965fd9fc9c70c77, type: 2}
-  - {fileID: 11400000, guid: f7c2d190e938a8b438de66e767c569a4, type: 2}
-  - {fileID: 11400000, guid: 16c8453f7b23136478f958b76ef650d6, type: 2}
-  - {fileID: 11400000, guid: d05f0b79ca2627b428b9d2f35269c595, type: 2}
+  - {fileID: 11400000, guid: db6f56552e92333459ac60c30c26116c, type: 2}
+  - {fileID: 11400000, guid: 34b2cc32fb4ca8d408e55921b5a5833b, type: 2}
+  - {fileID: 11400000, guid: 66566092d127b5745b52377769b893a6, type: 2}
+  - {fileID: 11400000, guid: 0891d8d9aa9d55047adef6ab645f81fe, type: 2}

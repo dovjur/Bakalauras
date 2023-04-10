@@ -9,7 +9,10 @@ public class CollectionManager : MonoBehaviour
     public List<Collection> collections;
     void Start()
     {
-        
+        if (SaveData.Instance.lootCards == null)
+        {
+            SaveData.Instance.lootCards = lootCards;
+        }
     }
     private void OnEnable()
     {
@@ -44,6 +47,7 @@ public class CollectionManager : MonoBehaviour
     {
         LootCard droppedCard = GetDroppedLoot();
         Debug.Log(droppedCard);
+
         foreach (Collection collection in collections)
         {
             if (collection.collectionCards.Contains(droppedCard))
@@ -52,5 +56,7 @@ public class CollectionManager : MonoBehaviour
                 break;
             }
         }
+        SaveData.Instance.lootCards = lootCards;
+        SaveLoadSystem.Save(SaveData.Instance);
     }
 }

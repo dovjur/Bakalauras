@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
-  m_Name: New Collection 2
+  m_Name: LeatherArmour
   m_EditorClassIdentifier: 
-  collectionName: aaaa
+  collectionName: Leather Armour
   collectionCards:
-  - {fileID: 11400000, guid: d7d22e173f9980149965fd9fc9c70c77, type: 2}
-  - {fileID: 11400000, guid: f7c2d190e938a8b438de66e767c569a4, type: 2}
-  - {fileID: 11400000, guid: 16c8453f7b23136478f958b76ef650d6, type: 2}
-  - {fileID: 11400000, guid: d05f0b79ca2627b428b9d2f35269c595, type: 2}
+  - {fileID: 11400000, guid: 997eceb9e139464429afb5ac9eedd455, type: 2}
+  - {fileID: 11400000, guid: 4d248bc0dd652c841b7f87c486aad31b, type: 2}
+  - {fileID: 11400000, guid: 8e0781a8951ad5845b453114c8dff5a8, type: 2}
+  - {fileID: 11400000, guid: 18304f81e73562e47b26e50fd7eaa198, type: 2}
