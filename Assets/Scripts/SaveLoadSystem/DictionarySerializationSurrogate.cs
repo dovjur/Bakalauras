@@ -25,7 +25,7 @@ public class DictionarySerializationSurrogate<TKey, TValue> : ISerializationSurr
         dictionary.Clear();
         for (int i = 0; i < keys.Count; i++)
         {
-            dictionary.Add(keys[i], values[i]);
+            dictionary.Add(keys[i], values[i]);  
         }
 
         return dictionary;

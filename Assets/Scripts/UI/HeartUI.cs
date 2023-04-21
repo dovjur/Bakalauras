@@ -13,36 +13,26 @@ public class HeartUI : MonoBehaviour
     private Sprite fullHeart;
     [SerializeField]
     private Sprite emptyHeart;
-
-    private Player player;
+    [SerializeField]
+    private Character character;
     private List<GameObject> hearts = new List<GameObject>();
 
     private void Start()
     {
-        player = GameManager.Player.GetComponent<Player>();
         LoadHearts();
-    }
-    private void OnEnable()
-    {
-        Player.onHealthChange += UpdateHearts;
-    }
-    private void OnDisable()
-    {
-        Player.onHealthChange -= UpdateHearts;
     }
 
     private void LoadHearts()
     {
-        for (int i = 0; i < player.GetHealth(); i++)
+        for (int i = 0; i < character.health; i++)
         {
             GameObject heart = Instantiate(heartPrefab, heartPanel.transform);
             hearts.Add(heart);
         }
     }
 
-    private void UpdateHearts(int currentHealth)
+    public void UpdateHearts(int currentHealth)
     {
-        Debug.Log(GameManager.Player.GetComponent<Player>().currentHealth);
         for (int i = 0; i < hearts.Count; i++)
         {
             if (i < currentHealth)

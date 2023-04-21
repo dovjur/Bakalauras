@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ExitCave : MonoBehaviour
-{ 
+{
+    public delegate void EndRun(bool dead);
+    public static event EndRun onRunEnded;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<BoxCollider2D>().enabled = false;
-            SaveData.Instance.runData.EndOfRun();
-            SceneLoadManager.instance.LoadMenu();
+            onRunEnded?.Invoke(false);
         }
     }
 }

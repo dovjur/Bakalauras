@@ -46,7 +46,6 @@ public class RunData
         SaveLoadSystem.Save(SaveData.Instance);
     }
 
-
     public void ResetRun()
     {
         coinsCollected = 0;

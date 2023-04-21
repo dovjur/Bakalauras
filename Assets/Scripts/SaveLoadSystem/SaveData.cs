@@ -25,6 +25,5 @@ public class SaveData
     public PlayerData player = new PlayerData();
     public Inventory Inventory = new Inventory();
     public RunData runData = new RunData();
-    //public List<Collection> collections = new List<Collection>();
     public List<LootCard> lootCards;
 }

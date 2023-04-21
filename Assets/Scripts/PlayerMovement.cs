@@ -9,21 +9,17 @@ public enum PlayerState
 }
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
-    public float attackSpeed;
-
-    private PlayerState state;
+    public Player player;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
+    private PlayerState state;
 
     private void Start()
     {
-        state = PlayerState.walking;
-        moveSpeed = SaveData.Instance.player.moveSpeed;
-        attackSpeed = SaveData.Instance.player.attackSpeed;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        state = PlayerState.walking;
         animator.SetFloat("Horizontal",0);
         animator.SetFloat("Vertical", -1);
     }
@@ -47,19 +43,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (state == PlayerState.walking)
         {
-            rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + movement.normalized * player.moveSpeed * Time.fixedDeltaTime);
         }       
     }
-    private IEnumerator AttackCoroutine()
-    {
-        state = PlayerState.attacking;
-        animator.SetBool("IsAttacking", true);
-        yield return null;
-        animator.SetBool("IsAttacking", false);
-        yield return new WaitForSeconds(.3f);
-        state = PlayerState.walking;
-    }
-    private void UpdateAnimation()
+
+    public void UpdateAnimation()
     {
         if (movement != Vector2.zero)
         {
@@ -72,4 +60,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsMoving", false);
         }
     }
+    private IEnumerator AttackCoroutine()
+    {
+        state = PlayerState.attacking;
+        animator.SetBool("IsAttacking", true);
+        yield return null;
+        animator.SetBool("IsAttacking", false);
+        yield return new WaitForSeconds(.3f);
+        state = PlayerState.walking;
+    }
+    
 }

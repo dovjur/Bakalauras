@@ -1,30 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
-[CreateAssetMenu]
-public class ItemObject : ScriptableObject, ISerializable
-{
+[Serializable]
+[CreateAssetMenu(fileName = "ItemObject", menuName = "Item/ItemObject", order = 1)]
+public class ItemObject : ScriptableObject
+{ 
     public int ID;
     public string label;
     public int price;
     public string description;
     public Sprite icon;
 
-    public void GetObjectData(SerializationInfo info, StreamingContext context)
-    {
-        info.AddValue("title", label);
-        info.AddValue("description", description);
-        info.AddValue("price", price);
-    }
-
-    protected ItemObject(SerializationInfo info, StreamingContext context)
-    {
-        label = info.GetString("title");
-        description = info.GetString("description");
-        price = info.GetInt32("price");
-        icon = Resources.Load<Sprite>(label);
-    }
+    public virtual void Use() { }
 }

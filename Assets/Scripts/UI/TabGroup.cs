@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TabGroup : MonoBehaviour
-{
-    [SerializeField]
-    private List<TabButton> tabButtons;
+{ 
     [SerializeField]
     private Sprite tabIdle;
     [SerializeField]
@@ -15,6 +13,7 @@ public class TabGroup : MonoBehaviour
     [SerializeField]
     private List<GameObject> pages;
 
+    private List<TabButton> tabButtons;
     private TabButton selectedTab;
 
     public void Subscribe(TabButton button)
@@ -22,6 +21,7 @@ public class TabGroup : MonoBehaviour
         if (tabButtons == null)
         {
             tabButtons = new List<TabButton>();
+            button.background.sprite = tabSelected;
         }
 
         tabButtons.Add(button);

@@ -11,27 +11,27 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private List<ItemObject> shopItemsSO;
     [SerializeField]
-    private ShopTemplate shopTemplate;
+    private ShopItemTemplate shopTemplate;
 
-    private List<ShopTemplate> shopItems = new List<ShopTemplate>();
+    private List<ShopItemTemplate> shopItems = new List<ShopItemTemplate>();
 
     public List<InventoryItem> inventoryItems;
 
     void Start()
     {
         inventoryItems = SaveData.Instance.Inventory.inventory;
-        LoadItems();
+        LoadShop();
         CanBePurchased();
     }
 
     private void OnEnable()
     {
-        ShopTemplate.onItemPurchased += Purchase;
+        ShopItemTemplate.onItemPurchased += Purchase;
     }
 
     private void OnDisable()
     {
-        ShopTemplate.onItemPurchased -= Purchase;
+        ShopItemTemplate.onItemPurchased -= Purchase;
     }
 
     private void CanBePurchased()
@@ -61,15 +61,16 @@ public class ShopManager : MonoBehaviour
             CanBePurchased();
         }
     }
-    public void LoadItems()
+    public void LoadShop()
     {
         for (int i = 0; i < shopItemsSO.Count; i++)
         {
-            ShopTemplate shopItem = Instantiate(shopTemplate, transform);
+            ShopItemTemplate shopItem = Instantiate(shopTemplate, transform);
 
             shopItem.titleText.text = shopItemsSO[i].label;
+            shopItem.descriptionText.text = shopItemsSO[i].description;
             shopItem.priceText.text = shopItemsSO[i].price.ToString();
-            shopItem.itemSprite.sprite = shopItemsSO[i].icon;
+            shopItem.image.sprite = shopItemsSO[i].icon;
 
             shopItems.Add(shopItem);
         }

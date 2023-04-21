@@ -11,6 +11,7 @@ public class LootCard : ScriptableObject, ISerializable
 {
     public Sprite lootSprite;
     public string lootName;
+    public string description;
     [Range(0f, 100f)]
     public int dropChance;
     public bool isUnlocked;

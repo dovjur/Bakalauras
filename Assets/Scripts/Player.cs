@@ -2,47 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : Character
 {
-    public delegate void UpdateHearts(int health);
-    public static event UpdateHearts onHealthChange;
-
-    public delegate void Death();
+    public delegate void Death(bool dead);
     public static event Death onPlayerDeath;
-
-    public int currentHealth;
-    private int currentMoveSpeed;
-    private int currentAttackSpeed;
-    private int currentStrength;
 
     void Awake()
     {
-        currentHealth = SaveData.Instance.player.health;
-        currentMoveSpeed = SaveData.Instance.player.moveSpeed;
-        currentAttackSpeed = SaveData.Instance.player.attackSpeed;
-        currentStrength = SaveData.Instance.player.strength;
+        health = SaveData.Instance.player.health;
+        moveSpeed = SaveData.Instance.player.moveSpeed;
+        attackSpeed = SaveData.Instance.player.attackSpeed;
+        strenght = SaveData.Instance.player.strength;
+
+        currentHealth = health;
     }
 
     void Update()
     {
         
     }
-    public int GetHealth()
+    public override void TakeDamage(int damage)
     {
-        return currentHealth;
-    }
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        onHealthChange?.Invoke(currentHealth);
+        base.TakeDamage(damage);
         if (currentHealth <= 0)
         {
-            onPlayerDeath?.Invoke();
+            onPlayerDeath?.Invoke(true);
         }
+    }
+    public void IncreaseHealth(int value)
+    {
+        if (currentHealth + value > health)
+        {
+            currentHealth = health;
+        }
+        else
+        {
+            currentHealth += value;
+        }
+        
+        Debug.Log(currentHealth);
+        //onHealthChange?.Invoke(health);
     }
 
     public void IncreaseStrength(int value)
     {
-        currentStrength += value;
+        strenght += value;
     }
 }

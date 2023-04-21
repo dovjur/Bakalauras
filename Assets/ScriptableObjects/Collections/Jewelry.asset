@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
   m_Name: Jewelry
   m_EditorClassIdentifier: 
-  collectionName: Jewelry
+  collectionName: Sparkling Stones
   collectionCards:
   - {fileID: 11400000, guid: 4d17063a0efcc2a4a884df246249a016, type: 2}
   - {fileID: 11400000, guid: 2ae3dc974208d00429a56a887239437a, type: 2}

@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     public Image icon;
     public TextMeshProUGUI labelText;
     public TextMeshProUGUI stackSizeText;
 
+    private ItemObject inventoryItem;
     public void DisableSlot()
     {
         icon.enabled = false;
@@ -34,10 +36,16 @@ public class InventorySlot : MonoBehaviour
         else
         {
             EnableSlot();
+            inventoryItem = Resources.Load<ItemObject>("Items/" +item.itemID.ToString());
 
-            icon.sprite = item.itemObject.icon;
-            labelText.text = item.itemObject.label;
+            icon.sprite = inventoryItem.icon;
+            labelText.text = inventoryItem.label;
             stackSizeText.text = item.stackSize.ToString();
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        inventoryItem.Use();
     }
 }

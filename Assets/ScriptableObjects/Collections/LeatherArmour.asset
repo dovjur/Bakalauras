@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
   m_Name: LeatherArmour
   m_EditorClassIdentifier: 
-  collectionName: Leather Armour
+  collectionName: Leather Lancers
   collectionCards:
   - {fileID: 11400000, guid: 997eceb9e139464429afb5ac9eedd455, type: 2}
   - {fileID: 11400000, guid: 4d248bc0dd652c841b7f87c486aad31b, type: 2}

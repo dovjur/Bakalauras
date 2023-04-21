@@ -9,31 +9,27 @@ public class CollectionManager : MonoBehaviour
     public List<Collection> collections;
     void Start()
     {
-        if (SaveData.Instance.lootCards == null)
+        if (SaveData.Instance.lootCards != null)
         {
-            SaveData.Instance.lootCards = lootCards;
+            lootCards = SaveData.Instance.lootCards;
         }
-    }
-    private void OnEnable()
-    {
-        Chest.onChestOpened += UpdateCollection;
-    }
-    private void OnDisable()
-    {
-        Chest.onChestOpened -= UpdateCollection;
     }
 
     public LootCard GetDroppedLoot()
     {
         int randomNumber = Random.Range(1, 101);
         List<LootCard> possibleLoot = new List<LootCard>();
-        foreach (LootCard lootCard in lootCards)
+        foreach (Collection collection in collections)
         {
-            if (randomNumber <= lootCard.dropChance)
+            foreach (LootCard lootCard in collection.collectionCards)
             {
-                possibleLoot.Add(lootCard);
+                if (randomNumber <= lootCard.dropChance)
+                {
+                    possibleLoot.Add(lootCard);
+                }
             }
         }
+        
         if (possibleLoot.Count > 0)
         {
             LootCard droppedCard = possibleLoot[Random.Range(0, possibleLoot.Count)];
@@ -43,11 +39,8 @@ public class CollectionManager : MonoBehaviour
         return null;
     }
 
-    private void UpdateCollection()
+    public void UpdateCollection(LootCard droppedCard)
     {
-        LootCard droppedCard = GetDroppedLoot();
-        Debug.Log(droppedCard);
-
         foreach (Collection collection in collections)
         {
             if (collection.collectionCards.Contains(droppedCard))

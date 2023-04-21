@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
   m_Name: GoldArmour
   m_EditorClassIdentifier: 
-  collectionName: Golden Armour
+  collectionName: Sunlit Sentinels
   collectionCards:
   - {fileID: 11400000, guid: bf24dc35939a124448c4b347257f7e65, type: 2}
   - {fileID: 11400000, guid: 69f93244215c6394287adfa772ab4d98, type: 2}

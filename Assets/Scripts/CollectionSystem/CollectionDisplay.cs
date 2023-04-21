@@ -10,7 +10,7 @@ public class CollectionDisplay : MonoBehaviour
     private List<GameObject> pagePanels = new List<GameObject>();
 
     public GameObject pagePanelPrefab;
-    public CollectionTemplate cardPrefab;
+    public CollectionCardTemplate cardPrefab;
     public Transform leftPanelParent;
     public Transform rightPanelParent;
 
@@ -83,8 +83,9 @@ public class CollectionDisplay : MonoBehaviour
 
         foreach (LootCard lootCard in collection.collectionCards)
         {
-            CollectionTemplate cardObject = Instantiate(cardPrefab, panel.GetPanel().transform);
-            //cardObject.SetTitle(lootCard.lootName);
+            CollectionCardTemplate cardObject = Instantiate(cardPrefab, panel.GetPanel().transform);
+            cardObject.titleText.text = lootCard.name;
+            cardObject.descriptionText.text = lootCard.description;
             cardObject.SetSprite(lootCard.lootSprite, lootCard.isUnlocked);
         }
     }

@@ -19,6 +19,7 @@ public class SaveLoadSystem
         }
 
         FileStream file = File.Create(filePath);
+
         formatter.Serialize(file, saveData);
 
         file.Close();
@@ -56,7 +57,6 @@ public class SaveLoadSystem
         SurrogateSelector surrogateSelector = new SurrogateSelector();
 
         DictionarySerializationSurrogate<ItemObject,InventoryItem> dictionarySurrogate = new DictionarySerializationSurrogate<ItemObject, InventoryItem>();
-
         surrogateSelector.AddSurrogate(typeof(Dictionary<ItemObject, InventoryItem>),new StreamingContext(StreamingContextStates.All), dictionarySurrogate);
 
         formatter.SurrogateSelector = surrogateSelector;

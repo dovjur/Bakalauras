@@ -2,41 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : Enemy, IDamageable
+public class Skeleton : Enemy
 {
-    [SerializeField]
-    private Coin loot;
     [SerializeField]
     private Projectile projectile;
     [SerializeField]
     private Collider2D objectCollider;
 
-    private Transform target;
-    private Rigidbody2D rb;
-    private Animator animator;
-    private Vector2 movement;
-    private int coinCount;
     private float timeBtwAttacks;
 
     void Start()
     {
-        target = GameManager.Player.transform;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        target = GameManager.Player.transform;
         coinCount = Random.Range(0,5);
         timeBtwAttacks = attackSpeed;
     }
     private void Update()
     {
-        if (health <= 0)
-        {
-            StartCoroutine(DeathCoroutine());
-        }
-        else
-        {
-            CheckDistance();
-            UpdateAnimation();
-        }
+        CheckDistance();
+        UpdateAnimation();
     }
 
     void FixedUpdate()
@@ -83,26 +69,30 @@ public class Skeleton : Enemy, IDamageable
     {
         ChangeState(EnemyState.attacking);
         animator.SetBool("IsAttacking", true);
-        projectile.SpawnProjectile(transform,damage,gameObject);
+        projectile.SpawnProjectile(transform,strenght,gameObject);
         yield return null;
         animator.SetBool("IsAttacking", false);
         yield return new WaitForSeconds(0.4f);
         ChangeState(EnemyState.walking);
     }
-
     private IEnumerator DeathCoroutine()
     {
         animator.SetBool("IsDead", true);
         GetComponent<BoxCollider2D>().enabled = false;
         yield return null;
         animator.SetBool("IsDead", false);
-        yield return new WaitForSeconds(1f);
-        loot.SpawnCoins(coinCount,transform);
+        yield return new WaitForSeconds(0.33f);
+        loot.SpawnCoins(coinCount, transform);
         SaveData.Instance.runData.AddKill();
         Destroy(gameObject);
     }
-    public void TakeDamage(int damage)
+
+    public override void TakeDamage(int damage)
     {
-        health -= damage;
+        base.TakeDamage(damage);
+        if (currentHealth <= 0)
+        {
+            StartCoroutine(DeathCoroutine());
+        }
     }
 }

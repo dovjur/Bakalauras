@@ -11,7 +11,7 @@ public class Inventory
     private const int size = 6;
 
     public List<InventoryItem> inventory;
-    private Dictionary<int, InventoryItem> itemDictionary = new Dictionary<int, InventoryItem>();
+    public Dictionary<int, InventoryItem> itemDictionary = new Dictionary<int, InventoryItem>();
 
     public Inventory()
     {
@@ -31,6 +31,7 @@ public class Inventory
             itemDictionary.Add(itemObject.ID, newItem);
             onInventoryChanged?.Invoke(inventory);
         }
+        SaveLoadSystem.Save(SaveData.Instance);
     }
 
     public void RemoveItem(ItemObject itemObject)
@@ -44,6 +45,7 @@ public class Inventory
                 itemDictionary.Remove(itemObject.ID);
             }
             onInventoryChanged?.Invoke(inventory);
+            SaveLoadSystem.Save(SaveData.Instance);
         }
     }
 

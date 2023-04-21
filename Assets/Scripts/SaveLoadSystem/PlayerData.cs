@@ -22,7 +22,7 @@ public class PlayerData
 		health = 3;
 		moveSpeed = 5;
 		attackSpeed = 5;
-        strength = 5;
+        strength = 1;
 
         maxHealth = 10;
         maxMoveSpeed = 10;

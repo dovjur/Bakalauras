@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class InventoryItem
 {
-    public ItemObject itemObject;
+    public int itemID;
     public int stackSize;
 
     public InventoryItem(ItemObject itemObject)
     {
-        this.itemObject = itemObject;
+        itemID = itemObject.ID;
         AddToStack();
     }
 

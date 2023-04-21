@@ -25,7 +25,6 @@ public class MainMenuUI : MonoBehaviour
     private void Awake()
     {
         SaveData.Instance = (SaveData)SaveLoadSystem.Load();
-        Debug.Log(SaveData.Instance.lootCards);
     }
     private void Start()
     {
@@ -57,8 +56,6 @@ public class MainMenuUI : MonoBehaviour
         SceneLoadManager.instance.LoadGame();
         isGameStarted = true;
     }
-
-
 
     public void Exit()
     {

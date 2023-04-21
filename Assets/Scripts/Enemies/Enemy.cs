@@ -9,15 +9,25 @@ public enum EnemyState
     attacking,
     wandering
 }
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
-    public int health;
-    public float moveSpeed;
-    public int damage;
-    public float attackSpeed;
+    [SerializeField]
+    protected Coin loot;
+
     public float chaseRadius;
     public float attackRadius;
     public EnemyState currentState;
+
+    protected Rigidbody2D rb;
+    protected Animator animator;
+    protected Vector2 movement;
+    protected Transform target;
+    protected int coinCount;
+
+    private void Start()
+    {
+
+    }
 
     public void ChangeState(EnemyState newState)
     {
@@ -26,4 +36,5 @@ public class Enemy : MonoBehaviour
             currentState = newState;
         }
     }
+    
 }

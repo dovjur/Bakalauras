@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af55c010b08081748a6aeab4ef1d273e, type: 3}
   m_Name: IronArmour
   m_EditorClassIdentifier: 
-  collectionName: Iron Armour
+  collectionName: Steel Squadron
   collectionCards:
   - {fileID: 11400000, guid: db6f56552e92333459ac60c30c26116c, type: 2}
   - {fileID: 11400000, guid: 34b2cc32fb4ca8d408e55921b5a5833b, type: 2}
