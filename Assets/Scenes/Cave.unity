@@ -1683,7 +1683,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 2022739448}
-  enemyPrefab: {fileID: 6941392111563663974, guid: 3bc6ee0367f8f68448862109c9cc0448, type: 3}
+  enemyPrefabs:
+  - {fileID: 6941392111563663974, guid: 3bc6ee0367f8f68448862109c9cc0448, type: 3}
+  - {fileID: 396270272896121456, guid: 34582b3ddb394f743b0ea307e211762d, type: 3}
   startEnemies: 15
   enemyNumber: 3
   spawnInterval: 60

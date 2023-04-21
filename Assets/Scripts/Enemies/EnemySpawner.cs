@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private MapGenerator mapGenerator;
     [SerializeField]
-    private GameObject enemyPrefab;
+    private List<GameObject> enemyPrefabs;
     [SerializeField]
     private int startEnemies = 5;
     [SerializeField]
@@ -49,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject newEnemy;
         for (int i = 0; i < enemyCount; i++)
         {
+            GameObject enemyPrefab = enemyPrefabs[Random.Range(0,enemyPrefabs.Count)];
             if (isStart)
             {
                 Vector2 randomPosition = mapGenerator.GetRandomGroundTile();

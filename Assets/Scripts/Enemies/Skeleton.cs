@@ -16,7 +16,6 @@ public class Skeleton : Enemy
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         target = GameManager.Player.transform;
-        coinCount = Random.Range(0,5);
         timeBtwAttacks = attackSpeed;
     }
     private void Update()
@@ -74,25 +73,5 @@ public class Skeleton : Enemy
         animator.SetBool("IsAttacking", false);
         yield return new WaitForSeconds(0.4f);
         ChangeState(EnemyState.walking);
-    }
-    private IEnumerator DeathCoroutine()
-    {
-        animator.SetBool("IsDead", true);
-        GetComponent<BoxCollider2D>().enabled = false;
-        yield return null;
-        animator.SetBool("IsDead", false);
-        yield return new WaitForSeconds(0.33f);
-        loot.SpawnCoins(coinCount, transform);
-        SaveData.Instance.runData.AddKill();
-        Destroy(gameObject);
-    }
-
-    public override void TakeDamage(int damage)
-    {
-        base.TakeDamage(damage);
-        if (currentHealth <= 0)
-        {
-            StartCoroutine(DeathCoroutine());
-        }
     }
 }
