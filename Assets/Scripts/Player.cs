@@ -24,6 +24,7 @@ public class Player : Character
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
+        Debug.Log(currentHealth);
         if (currentHealth <= 0)
         {
             onPlayerDeath?.Invoke(true);

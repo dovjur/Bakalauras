@@ -34,7 +34,6 @@ public class RunManager : MonoBehaviour
     {
         lootCard = collectionManager.GetDroppedLoot();
         Chest.onChestOpened -= DisplayLootCard;
-        Debug.Log(lootCard);
     }
 
     public void EndRun(bool dead)
@@ -49,10 +48,6 @@ public class RunManager : MonoBehaviour
         }
         SaveData.Instance.runData.EndOfRun();
         runEndPanel.SetActive(true);
-    }
-
-    public void BackToMenu()
-    {
-        SceneLoadManager.instance.LoadMenu();
+        Time.timeScale = 0;
     }
 }

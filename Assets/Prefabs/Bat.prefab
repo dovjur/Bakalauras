@@ -197,7 +197,7 @@ MonoBehaviour:
   health: 3
   currentHealth: 0
   moveSpeed: 3
-  strenght: 0
+  strenght: 1
   attackSpeed: 0
   loot: {fileID: 8334698288154270997, guid: bb0c65591f8faf44e9dcd61ed7854c24, type: 3}
   chaseRadius: 10

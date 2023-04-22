@@ -40,10 +40,18 @@ public class Bat : Enemy
     private IEnumerator AttackCoroutine()
     {
         ChangeState(EnemyState.attacking);
-        animator.SetBool("IsAttacking", true);
+        animator.SetBool("IsDead", true);
         yield return null;
-        animator.SetBool("IsAttacking", false);
+        animator.SetBool("IsDead", false);
         yield return new WaitForSeconds(0.4f);
         ChangeState(EnemyState.walking);
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null)
+        {
+            damageable.TakeDamage(strenght);
+        }
     }
 }

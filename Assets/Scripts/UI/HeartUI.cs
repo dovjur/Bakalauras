@@ -13,12 +13,13 @@ public class HeartUI : MonoBehaviour
     private Sprite fullHeart;
     [SerializeField]
     private Sprite emptyHeart;
-    [SerializeField]
+
     private Character character;
     private List<GameObject> hearts = new List<GameObject>();
 
     private void Start()
     {
+        character = GameManager.Player.GetComponent<Player>();
         LoadHearts();
     }
 
