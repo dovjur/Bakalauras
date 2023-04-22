@@ -8,7 +8,7 @@ using UnityEngine;
 public class Collection : ScriptableObject
 {
     public string collectionName;
-    public List<LootCard> collectionCards;
+    public List<LootCard> collectionCards = new List<LootCard>();
 
     public void UnlockCard(LootCard lootCard)
     {

@@ -27,4 +27,9 @@ public class LootCard : ScriptableObject, ISerializable
         lootName = info.GetString("name");
         isUnlocked = info.GetBoolean("unlocked");
     }
+
+    public LootCard()
+    {
+
+    }
 }
