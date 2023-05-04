@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,9 +8,6 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI coinCount;
-
     [Header("Run Data")]
     [SerializeField] private TextMeshProUGUI runCoins;
     [SerializeField] private TextMeshProUGUI runKills;
@@ -24,7 +22,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        SaveData.Instance = (SaveData)SaveLoadSystem.Load();
+        SaveData.Instance = (SaveData)SaveLoad.Load();
     }
     private void Start()
     {
@@ -35,26 +33,14 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        ShopManager.onCoinsSpend += UpdateCoinUI;
-        StatManager.onStatsUpgraded += UpdateCoinUI;
-    }
-
-    private void OnDisable()
-    {
-        ShopManager.onCoinsSpend -= UpdateCoinUI;
-        StatManager.onStatsUpgraded -= UpdateCoinUI;
-    }
-
     public void Play()
     {
+        isGameStarted = true;
         if (SaveData.Instance.runData != null)
         {
             SaveData.Instance.runData.ResetRun();
         }
-        SceneLoadManager.instance.LoadGame();
-        isGameStarted = true;
+        SceneLoadManager.instance.LoadGame(); 
     }
 
     public void Exit()
@@ -64,11 +50,13 @@ public class MainMenuUI : MonoBehaviour
 
     public void UpdateUIAfterRun()
     {
-        UpdateCoinUI();
-
         runCoins.text += SaveData.Instance.runData.GetCoins().ToString();
         runKills.text += SaveData.Instance.runData.GetKills().ToString();
-        runTime.text += SaveData.Instance.runData.GetTime().ToString();
+
+        float timeInSeconds = SaveData.Instance.runData.GetTime();
+        int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
+        int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
+        runTime.text += string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void EnableGamePanel()
@@ -76,10 +64,5 @@ public class MainMenuUI : MonoBehaviour
         menuPanel.SetActive(false);
         gamePanel.SetActive(true);
         isGameStarted = false;
-    }
-
-    public void UpdateCoinUI()
-    {
-        coinCount.text = SaveData.Instance.player.coins.ToString();
     }
 }

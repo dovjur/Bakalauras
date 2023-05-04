@@ -9,17 +9,17 @@ public class ShopManager : MonoBehaviour
     public static event CoinsSpend onCoinsSpend;
 
     [SerializeField]
-    private List<ItemObject> shopItemsSO;
+    public List<ItemObject> shopItemsSO = new List<ItemObject>();
     [SerializeField]
-    private ShopItemTemplate shopTemplate;
+    private ShopItemTemplate shopItemTemplate;
 
-    private List<ShopItemTemplate> shopItems = new List<ShopItemTemplate>();
+    public List<ShopItemTemplate> shopItems = new List<ShopItemTemplate>();
 
     public List<InventoryItem> inventoryItems;
 
     void Start()
     {
-        inventoryItems = SaveData.Instance.Inventory.inventory;
+        inventoryItems = SaveData.Instance.Inventory.items;
         LoadShop();
         CanBePurchased();
     }
@@ -49,15 +49,15 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void Purchase(string title)
+    public void Purchase(string label)
     {
-        ItemObject item = shopItemsSO.Find(x => x.label == title);
+        ItemObject item = shopItemsSO.Find(x => x.label == label);
         if (SaveData.Instance.player.coins >= item.price)
         {
             SaveData.Instance.player.coins -= item.price;
             SaveData.Instance.Inventory.AddItem(item);
-            SaveLoadSystem.Save(SaveData.Instance);
-            onCoinsSpend();
+            SaveLoad.Save(SaveData.Instance);
+            onCoinsSpend?.Invoke();
             CanBePurchased();
         }
     }
@@ -65,7 +65,7 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < shopItemsSO.Count; i++)
         {
-            ShopItemTemplate shopItem = Instantiate(shopTemplate, transform);
+            ShopItemTemplate shopItem = Instantiate(shopItemTemplate, transform);
 
             shopItem.titleText.text = shopItemsSO[i].label;
             shopItem.descriptionText.text = shopItemsSO[i].description;

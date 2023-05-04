@@ -7,11 +7,12 @@ public class RunManager : MonoBehaviour
     [SerializeField]
     private GameObject runEndPanel;
     private CollectionManager collectionManager;
-    private LootCard lootCard;
+    private Card lootCard;
     void Start()
     {
         lootCard = null;
         collectionManager = GameObject.Find("CollectionManager").GetComponent<CollectionManager>();
+        collectionManager.ApplyBuffs();
     }
 
     void Update()
@@ -33,6 +34,7 @@ public class RunManager : MonoBehaviour
     public void DisplayLootCard()
     {
         lootCard = collectionManager.GetDroppedLoot();
+        GameManager.Player.lootCard.GetComponent<SpriteRenderer>().sprite = lootCard.sprite;
         Chest.onChestOpened -= DisplayLootCard;
     }
 
@@ -44,6 +46,10 @@ public class RunManager : MonoBehaviour
         }
         else
         {
+            if (lootCard != null && lootCard.isUnlocked)
+            {
+
+            }
             collectionManager.UpdateCollection(lootCard);
         }
         SaveData.Instance.runData.EndOfRun();

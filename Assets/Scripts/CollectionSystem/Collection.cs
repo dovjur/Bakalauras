@@ -8,17 +8,18 @@ using UnityEngine;
 public class Collection : ScriptableObject
 {
     public string collectionName;
-    public List<LootCard> collectionCards = new List<LootCard>();
+    public List<Card> collectionCards = new List<Card>();
+    public BuffData buffData;
 
-    public void UnlockCard(LootCard lootCard)
+    public void UnlockCard(Card card)
     {
-        int index = collectionCards.IndexOf(lootCard);
+        int index = collectionCards.IndexOf(card);
         if (index != -1)
         {
             collectionCards[index].isUnlocked = true;
         }
     }
-    public bool IsCardUnlocked(LootCard card)
+    public bool IsCardUnlocked(Card card)
     {
         int index = collectionCards.IndexOf(card);
         if (index != -1)
@@ -26,5 +27,24 @@ public class Collection : ScriptableObject
             return collectionCards[index].isUnlocked;
         }
         return false;
+    }
+    public bool IsCollectionComplete()
+    {
+        foreach (Card card in collectionCards)
+        {
+            if (!card.isUnlocked)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void ApplyBuff()
+    {
+        if (buffData != null)
+        {
+            buffData.ApplyBuff();
+        }
     }
 }

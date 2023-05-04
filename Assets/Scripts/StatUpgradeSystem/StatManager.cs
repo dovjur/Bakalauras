@@ -14,13 +14,12 @@ public class StatManager : MonoBehaviour
     [SerializeField]
     private GameObject upgradePanel;
     [SerializeField]
+    private GameObject notEnoughMoneytext;
+    [SerializeField]
     private List<StatField> stats = new List<StatField>();
 
     public static int upgradePrice = 0;
-    private void Start()
-    {
-        
-    }
+
     private void Update()
     {
         if (upgradePrice > 0)
@@ -49,7 +48,7 @@ public class StatManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Neuztenka Pinigu: " + upgradePrice);
+            StartCoroutine(NotEnoughMoney());
         }
     }
 
@@ -59,5 +58,12 @@ public class StatManager : MonoBehaviour
         {
             stat.ResetStat();
         }
+    }
+
+    private IEnumerator NotEnoughMoney()
+    {
+        notEnoughMoneytext.SetActive(true);
+        yield return new WaitForSeconds(3);
+        notEnoughMoneytext.SetActive(false);
     }
 }

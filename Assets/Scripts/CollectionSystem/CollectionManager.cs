@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollectionManager : MonoBehaviour
 {
     [SerializeField]
-    private List<LootCard> lootCards = new List<LootCard>();
+    private List<Card> lootCards = new List<Card>();
     public List<Collection> collections;
     void Start()
     {
@@ -15,13 +15,13 @@ public class CollectionManager : MonoBehaviour
         }
     }
 
-    public LootCard GetDroppedLoot()
+    public Card GetDroppedLoot()
     {
         int randomNumber = Random.Range(1, 101);
-        List<LootCard> possibleLoot = new List<LootCard>();
+        List<Card> possibleLoot = new List<Card>();
         foreach (Collection collection in collections)
         {
-            foreach (LootCard lootCard in collection.collectionCards)
+            foreach (Card lootCard in collection.collectionCards)
             {
                 if (randomNumber <= lootCard.dropChance)
                 {
@@ -32,24 +32,49 @@ public class CollectionManager : MonoBehaviour
         
         if (possibleLoot.Count > 0)
         {
-            LootCard droppedCard = possibleLoot[Random.Range(0, possibleLoot.Count)];
+            Card droppedCard = possibleLoot[Random.Range(0, possibleLoot.Count)];
             return droppedCard;
         }
 
         return null;
     }
 
-    public void UpdateCollection(LootCard droppedCard)
+    public void UpdateCollection(Card droppedCard)
     {
         foreach (Collection collection in collections)
         {
             if (collection.collectionCards.Contains(droppedCard))
             {
                 collection.UnlockCard(droppedCard);
+                if (collection.IsCollectionComplete())
+                {
+                    collection.ApplyBuff();
+                }
                 break;
             }
         }
         SaveData.Instance.lootCards = lootCards;
-        SaveLoadSystem.Save(SaveData.Instance);
+        SaveLoad.Save(SaveData.Instance);
+    }
+
+    public void ApplyBuffs()
+    {
+        foreach (Collection collection in collections)
+        {
+            if (collection.IsCollectionComplete())
+            {
+                collection.ApplyBuff();
+            }
+            else
+            {
+                foreach (Card card in collection.collectionCards)
+                {
+                    if (card.isUnlocked && card.buffData != null)
+                    {
+                        card.ApplyBuff();
+                    }
+                }
+            }
+        }
     }
 }

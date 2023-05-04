@@ -18,7 +18,7 @@ public class PlayerData
 
     public PlayerData()
 	{
-		coins = 10000;
+		coins = 10;
 		health = 3;
 		moveSpeed = 5;
 		attackSpeed = 5;

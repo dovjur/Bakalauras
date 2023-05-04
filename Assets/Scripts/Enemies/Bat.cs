@@ -32,19 +32,6 @@ public class Bat : Enemy
             ChangeState(EnemyState.walking);
             movement = target.position - transform.position;
         }
-        if (distance <= attackRadius)
-        {
-            //StartCoroutine(AttackCoroutine());
-        }
-    }
-    private IEnumerator AttackCoroutine()
-    {
-        ChangeState(EnemyState.attacking);
-        animator.SetBool("IsDead", true);
-        yield return null;
-        animator.SetBool("IsDead", false);
-        yield return new WaitForSeconds(0.4f);
-        ChangeState(EnemyState.walking);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

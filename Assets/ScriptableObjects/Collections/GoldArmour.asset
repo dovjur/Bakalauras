@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 69f93244215c6394287adfa772ab4d98, type: 2}
   - {fileID: 11400000, guid: 3219002ad16da634b92be50e0fd8514a, type: 2}
   - {fileID: 11400000, guid: 8dca4b87621e4fd4d8a59a178970b7b6, type: 2}
+  buffData: {fileID: 11400000, guid: 97b4670245bc4684791f2c8f23f52129, type: 2}

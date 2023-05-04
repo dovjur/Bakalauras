@@ -10,7 +10,7 @@ public class CollectionTests
     public void UnlockCard_CardIsInCollectionAndNotUnlocked_UnlocksCard()
     {
         Collection collection = ScriptableObject.CreateInstance<Collection>();
-        LootCard lootCard = ScriptableObject.CreateInstance<LootCard>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
         lootCard.isUnlocked = false;
         collection.collectionCards.Add(lootCard);
 
@@ -23,9 +23,9 @@ public class CollectionTests
     public void UnlockCard_CardIsFromDifferentCollection_CollectionStaysTheSame()
     {
         Collection collection = ScriptableObject.CreateInstance<Collection>();
-        LootCard lootCard = ScriptableObject.CreateInstance<LootCard>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
         collection.collectionCards.Add(lootCard);
-        LootCard lootCard1 = ScriptableObject.CreateInstance<LootCard>();
+        Card lootCard1 = ScriptableObject.CreateInstance<Card>();
 
         collection.UnlockCard(lootCard1);
 
@@ -36,7 +36,7 @@ public class CollectionTests
     public void IsCardUnlocked_CardIsLocked_RetrunsFalse()
     {
         Collection collection = ScriptableObject.CreateInstance<Collection>();
-        LootCard lootCard = ScriptableObject.CreateInstance<LootCard>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
         collection.collectionCards.Add(lootCard);
 
         bool isUnlocked = collection.IsCardUnlocked(lootCard);
@@ -48,12 +48,23 @@ public class CollectionTests
     public void IsCardUnlocked_CardIsUnlocked_RetrunsTrue()
     {
         Collection collection = ScriptableObject.CreateInstance<Collection>();
-        LootCard lootCard = ScriptableObject.CreateInstance<LootCard>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
         collection.collectionCards.Add(lootCard);
         collection.UnlockCard(lootCard);
 
         bool isUnlocked = collection.IsCardUnlocked(lootCard);
 
         Assert.IsTrue(isUnlocked);
+    }
+
+    [Test]
+    public void IsCardUnlocked_CardIsNotFromCollection_RetrunsFalse()
+    {
+        Collection collection = ScriptableObject.CreateInstance<Collection>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
+
+        bool isUnlocked = collection.IsCardUnlocked(lootCard);
+
+        Assert.IsFalse(isUnlocked);
     }
 }

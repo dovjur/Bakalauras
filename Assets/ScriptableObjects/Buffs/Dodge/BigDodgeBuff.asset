@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77609b01e6a5eb242ac458ca1641c2a5, type: 3}
-  m_Name: Bomb
+  m_Script: {fileID: 11500000, guid: 5a25d1fa922891c4a9aa29c03756635d, type: 3}
+  m_Name: BigDodgeBuff
   m_EditorClassIdentifier: 
-  ID: 1
-  label: Bomb
-  price: 30
-  description: 
-  icon: {fileID: -460290213, guid: 75c9e6366e6fc7942ac49659029bc789, type: 3}
+  buffName: 
+  dodgeChance: 0

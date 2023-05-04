@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
+  m_Script: {fileID: 11500000, guid: 70363edb887a0754cab7de519caab5a9, type: 3}
   m_Name: GoldSword
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: 2122780513, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  lootName: Golden Sword
-  dropChance: 25
+  sprite: {fileID: 2122780513, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
+  label: Gold Sword
+  description: 
+  dropChance: 20
   isUnlocked: 0

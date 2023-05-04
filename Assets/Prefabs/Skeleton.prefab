@@ -197,11 +197,10 @@ MonoBehaviour:
   health: 5
   currentHealth: 0
   moveSpeed: 2
-  strenght: 0
+  strenght: 1
   attackSpeed: 2
   loot: {fileID: 8334698288154270997, guid: bb0c65591f8faf44e9dcd61ed7854c24, type: 3}
   chaseRadius: 6
   attackRadius: 3
   currentState: 0
   projectile: {fileID: -3313553667363862336, guid: d7b34abc020226f4dac21522188f4a7b, type: 3}
-  objectCollider: {fileID: 4274657419719457592}

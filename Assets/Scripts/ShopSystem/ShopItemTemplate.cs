@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ShopItemTemplate : ItemTemplate
 {
-    public delegate void PurchaseItem(string title);
+    public delegate void PurchaseItem(string label);
     public static event PurchaseItem onItemPurchased;
 
     public TextMeshProUGUI priceText;

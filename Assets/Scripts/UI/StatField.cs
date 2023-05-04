@@ -21,8 +21,8 @@ public class StatField : MonoBehaviour
     private GameObject decreaseButton;
     [SerializeField]
     private CommandManager commandManager;
-
-    public Stat stat;
+    [SerializeField]
+    private Stat stat;
 
     private void Start()
     {
@@ -117,7 +117,7 @@ public class StatField : MonoBehaviour
 
     public void SaveStat()
     {
-        SaveLoadSystem.Save(SaveData.Instance);
+        SaveLoad.Save(SaveData.Instance);
         commandManager.ClearHistory();
         decreaseButton.SetActive(false);
     }

@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
     {
         size = SaveData.Instance.Inventory.GetSize();
         inventorySlots = new List<InventorySlot>(size);
-        DisplayInventory(SaveData.Instance.Inventory.inventory);
+        DisplayInventory(SaveData.Instance.Inventory.items);
     }
 
     private void OnEnable()

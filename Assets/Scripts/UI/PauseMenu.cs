@@ -30,13 +30,14 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void Setting()
+    public void Settings()
     {
 
     }
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneLoadManager.instance.LoadMenu();
     }
 }

@@ -11,7 +11,7 @@ public class HealthPotion : ItemObject
 
     public override void Use()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().IncreaseHealth(heal);
+        GameManager.Player.IncreaseHealth(heal);
         SaveData.Instance.Inventory.RemoveItem(this);
     }
 }

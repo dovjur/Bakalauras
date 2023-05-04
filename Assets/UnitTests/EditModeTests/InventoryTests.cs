@@ -15,8 +15,8 @@ public class InventoryTests
 
         inventory.AddItem(itemObject);
 
-        Assert.That(inventory.inventory[0].itemID == itemObject.ID);
-        Assert.That(inventory.inventory[0].stackSize == 1);
+        Assert.That(inventory.items[0].itemID == itemObject.ID);
+        Assert.That(inventory.items[0].stackSize == 1);
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class InventoryTests
 
         inventory.AddItem(itemObject);
 
-        Assert.That(inventory.inventory[0].stackSize == 2);
-        Assert.That(inventory.inventory[0].itemID == itemObject.ID);
+        Assert.That(inventory.items[0].stackSize == 2);
+        Assert.That(inventory.items[0].itemID == itemObject.ID);
     }
 
     [Test]
@@ -39,8 +39,8 @@ public class InventoryTests
 
         inventory.AddItem(itemObject1);
 
-        Assert.That(inventory.inventory[0].itemID == itemObject.ID);
-        Assert.That(inventory.inventory[1].itemID == itemObject1.ID);
+        Assert.That(inventory.items[0].itemID == itemObject.ID);
+        Assert.That(inventory.items[1].itemID == itemObject1.ID);
     }
 
     [Test]
@@ -52,8 +52,8 @@ public class InventoryTests
 
         inventory.RemoveItem(itemObject);
 
-        Assert.That(inventory.inventory[0].itemID != itemObject.ID);
-        Assert.That(inventory.inventory.Count == 1);
+        Assert.That(inventory.items[0].itemID != itemObject.ID);
+        Assert.That(inventory.items.Count == 1);
     }
 
     [Test]
@@ -64,6 +64,6 @@ public class InventoryTests
 
         inventory.RemoveItem(itemObject1);
 
-        Assert.That(inventory.inventory[0].itemID == itemObject.ID);
+        Assert.That(inventory.items[0].itemID == itemObject.ID);
     }
 }

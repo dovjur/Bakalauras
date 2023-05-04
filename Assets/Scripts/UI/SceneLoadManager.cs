@@ -17,23 +17,23 @@ public class SceneLoadManager : MonoBehaviour
     {
         instance = this;
 
-        SceneManager.LoadSceneAsync(0,LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(1,LoadSceneMode.Additive);
     }
 
     public void LoadGame()
     {
         loadingScreen.gameObject.SetActive(true);
 
-        scenesLoading.Add(SceneManager.UnloadSceneAsync(0));
-        scenesLoading.Add(SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync(1));
+        scenesLoading.Add(SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
     }
 
     public void LoadMenu()
     {
-        scenesLoading.Add(SceneManager.UnloadSceneAsync(1));
-        scenesLoading.Add(SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync(2));
+        scenesLoading.Add(SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive));
     }
 
     public IEnumerator GetSceneLoadProgress()

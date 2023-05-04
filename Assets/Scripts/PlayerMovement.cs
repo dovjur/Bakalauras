@@ -4,17 +4,23 @@ using UnityEngine;
 
 public enum PlayerState
 {
+    idle,
     walking,
     attacking
 }
 public class PlayerMovement : MonoBehaviour
 {
-    public Player player;
+    [SerializeField]
+    private Player player;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
     private PlayerState state;
 
+    private void OnEnable()
+    {
+        Chest.onChestOpened += OpenChest;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -69,5 +75,21 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         state = PlayerState.walking;
     }
-    
+    private void OpenChest()
+    {
+        StartCoroutine(OpenChestCoroutine());
+        Chest.onChestOpened -= OpenChest;
+    }
+
+    private IEnumerator OpenChestCoroutine()
+    {
+        state = PlayerState.idle;
+        animator.SetBool("OpenChest", true);
+        yield return null;
+        animator.SetBool("OpenChest", false);
+        yield return new WaitForSeconds(1.25f);
+        player.lootCard.SetActive(false);
+        state = PlayerState.walking;
+    }
+
 }

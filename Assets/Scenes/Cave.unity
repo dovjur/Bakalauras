@@ -1822,8 +1822,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 2022739448}
-  enemySpawner: {fileID: 1460725882}
-  playerPrefab: {fileID: 7167095233449205071, guid: efc918f86f4ca7f44b6063b0706ba097, type: 3}
+  playerPrefab: {fileID: 2968201054768907723, guid: efc918f86f4ca7f44b6063b0706ba097, type: 3}
+  compass: {fileID: 1327105540}
 --- !u!114 &1056223912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2658,8 +2658,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 2022739448}
   enemyPrefabs:
-  - {fileID: 6941392111563663974, guid: 3bc6ee0367f8f68448862109c9cc0448, type: 3}
-  - {fileID: 396270272896121456, guid: 34582b3ddb394f743b0ea307e211762d, type: 3}
+  - {fileID: -8472419075291644052, guid: 3bc6ee0367f8f68448862109c9cc0448, type: 3}
+  - {fileID: -4580307676619068565, guid: 34582b3ddb394f743b0ea307e211762d, type: 3}
   startEnemies: 15
   enemyNumber: 3
   spawnInterval: 60
@@ -3222,11 +3222,12 @@ MonoBehaviour:
   width: 200
   fillProcentage: 50
   iterations: 20
-  GroundTilemap: {fileID: 653128933}
-  WallTilemap: {fileID: 1351512147}
+  groundTilemap: {fileID: 653128933}
+  wallTilemap: {fileID: 1351512147}
   wallTiles: {fileID: 11400000, guid: 56a1031d04e015141bf5468b796a01e2, type: 2}
   groundTiles: {fileID: 11400000, guid: 711c22bcd2ada1d4f956a8376d31d3b3, type: 2}
   entranceTiles: {fileID: 11400000, guid: 30bffd7d5a3d3e842a3b786988131ab9, type: 2}
   chestPrefab: {fileID: 8744009739042437193, guid: f717b2ebd05e2c34aa2465c628c6db44, type: 3}
   barrelPrefab: {fileID: 6269636793308631945, guid: dc6983844de83094fae49ba5160d3ec1, type: 3}
+  spawnPoint: {x: 0, y: 0, z: 0}
   mainCamera: {fileID: 1828796934}

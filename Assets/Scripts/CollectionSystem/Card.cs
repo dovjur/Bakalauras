@@ -1,18 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+[CreateAssetMenu]
+[Serializable]
+public class Card : ScriptableObject, ISerializable
 {
-    // Start is called before the first frame update
-    void Start()
+    public Sprite sprite;
+    public string label;
+    public string description;
+    [Range(0f, 100f)]
+    public int dropChance;
+    public bool isUnlocked;
+    public BuffData buffData;
+
+    public void GetObjectData(SerializationInfo info, StreamingContext context)
     {
-        
+        info.AddValue("label", label);
+        info.AddValue("unlocked", isUnlocked);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected Card(SerializationInfo info, StreamingContext context)
     {
-        
+        label = info.GetString("label");
+        isUnlocked = info.GetBoolean("unlocked");
+    }
+
+    public Card()
+    {
+
+    }
+
+    public void ApplyBuff()
+    {
+        if (buffData != null)
+        {
+            buffData.ApplyBuff();
+        }
     }
 }

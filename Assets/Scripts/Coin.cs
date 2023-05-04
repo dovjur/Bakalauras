@@ -8,8 +8,6 @@ public class Coin : MonoBehaviour
     public delegate void CoinCollected();
     public static event CoinCollected onCoinCollected;
 
-    public bool isMagnetOn = false;
-
     [SerializeField]
     private GameObject prefab;
 
@@ -37,7 +35,7 @@ public class Coin : MonoBehaviour
             rb.MovePosition(transform.position + offset * Time.deltaTime);
         }
 
-        if (isMagnetOn)
+        if (GameManager.Player.isMagnetOn)
         {
             Vector3 targetPos = Vector3.MoveTowards(transform.position, target.position, 20 * Time.deltaTime);
             rb.MovePosition(targetPos);

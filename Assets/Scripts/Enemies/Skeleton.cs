@@ -6,8 +6,6 @@ public class Skeleton : Enemy
 {
     [SerializeField]
     private Projectile projectile;
-    [SerializeField]
-    private Collider2D objectCollider;
 
     private float timeBtwAttacks;
 

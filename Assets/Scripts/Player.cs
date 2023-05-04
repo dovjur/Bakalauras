@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public delegate void Death(bool dead);
-    public static event Death onPlayerDeath;
+    public delegate void OnPlayerDeath(bool dead);
+    public static event OnPlayerDeath onPlayerDeath;
 
+    public delegate void OnHealthChange(int health);
+    public static event OnHealthChange onHealthChange;
+
+    public GameObject lootCard;
+
+    public float dodgeChance = 0;
+    public bool isMagnetOn = false;
     void Awake()
     {
         health = SaveData.Instance.player.health;
@@ -17,17 +24,17 @@ public class Player : Character
         currentHealth = health;
     }
 
-    void Update()
-    {
-        
-    }
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
-        Debug.Log(currentHealth);
-        if (currentHealth <= 0)
+        int rng = Random.Range(1,101);
+        if (rng >= dodgeChance)
         {
-            onPlayerDeath?.Invoke(true);
+            base.TakeDamage(damage);
+            onHealthChange?.Invoke(currentHealth);
+            if (currentHealth <= 0)
+            {
+                onPlayerDeath?.Invoke(true);
+            }
         }
     }
     public void IncreaseHealth(int value)
@@ -40,9 +47,7 @@ public class Player : Character
         {
             currentHealth += value;
         }
-        
-        Debug.Log(currentHealth);
-        //onHealthChange?.Invoke(health);
+        onHealthChange?.Invoke(currentHealth);
     }
 
     public void IncreaseStrength(int value)

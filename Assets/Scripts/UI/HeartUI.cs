@@ -19,8 +19,16 @@ public class HeartUI : MonoBehaviour
 
     private void Start()
     {
-        character = GameManager.Player.GetComponent<Player>();
+        character = GameManager.Player;
         LoadHearts();
+    }
+    private void OnEnable()
+    {
+        Player.onHealthChange += UpdateHearts;
+    }
+    private void OnDisable()
+    {
+        Player.onHealthChange -= UpdateHearts;
     }
 
     private void LoadHearts()

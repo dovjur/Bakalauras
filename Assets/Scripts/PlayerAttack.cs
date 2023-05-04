@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HIt : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
     [SerializeField]
     private Player player;

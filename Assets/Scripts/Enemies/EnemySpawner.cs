@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private MapGenerator mapGenerator;
     [SerializeField]
-    private List<GameObject> enemyPrefabs;
+    private List<Enemy> enemyPrefabs;
     [SerializeField]
     private int startEnemies = 5;
     [SerializeField]
@@ -19,11 +19,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private GameObject enemyParent;
 
-
+    private int[,] map;
     private float timer = 0f;
     private Transform player;
     void Start()
     {
+        map = mapGenerator.GetMap();
         player = GameManager.Player.transform;
         SpawnEnemy(startEnemies, true);     
     }
@@ -46,10 +47,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(int enemyCount, bool isStart)
     {
-        GameObject newEnemy;
+        Enemy newEnemy;
         for (int i = 0; i < enemyCount; i++)
         {
-            GameObject enemyPrefab = enemyPrefabs[Random.Range(0,enemyPrefabs.Count)];
+            Enemy enemyPrefab = enemyPrefabs[Random.Range(0,enemyPrefabs.Count)];
             if (isStart)
             {
                 Vector2 randomPosition = mapGenerator.GetRandomGroundTile();
@@ -57,10 +58,27 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                Vector2 randomPosition = mapGenerator.GetEnemySpawnTile(player.transform, spawnDistance);
+                Vector2 randomPosition = GetEnemySpawnTile(player.transform, spawnDistance);
                 newEnemy = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
             }
             newEnemy.transform.SetParent(enemyParent.transform);
+        }
+    }
+    public Vector2 GetEnemySpawnTile(Transform player, float spawnDistance)
+    {
+        float minDistance = 20f;
+        Vector2 randomPosition = player.position + Random.insideUnitSphere * spawnDistance;
+        if (Vector2.Distance(randomPosition, player.position) < minDistance)
+        {
+            randomPosition = player.position + Random.insideUnitSphere * (minDistance + 1f);
+        }
+        if (mapGenerator.IsInMapRange((int)randomPosition.x, (int)randomPosition.y) && map[(int)randomPosition.x, (int)randomPosition.y] == 0)
+        {
+            return randomPosition;
+        }
+        else
+        {
+            return GetEnemySpawnTile(player, spawnDistance);
         }
     }
 }

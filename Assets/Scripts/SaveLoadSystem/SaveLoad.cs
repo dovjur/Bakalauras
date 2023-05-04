@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveLoadSystem
+public class SaveLoad
 {
     private static string filePath = Application.persistentDataPath + "/saves/" + "GetBackAlive.save";
     public static void Save(object saveData)

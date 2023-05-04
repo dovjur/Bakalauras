@@ -81,12 +81,12 @@ public class CollectionDisplay : MonoBehaviour
     {
         panel.SetName(collection.collectionName);
 
-        foreach (LootCard lootCard in collection.collectionCards)
+        foreach (Card lootCard in collection.collectionCards)
         {
             CollectionCardTemplate cardObject = Instantiate(cardPrefab, panel.GetPanel().transform);
             cardObject.titleText.text = lootCard.name;
             cardObject.descriptionText.text = lootCard.description;
-            cardObject.SetSprite(lootCard.lootSprite, lootCard.isUnlocked);
+            cardObject.SetSprite(lootCard.sprite, lootCard.isUnlocked);
         }
     }
 }

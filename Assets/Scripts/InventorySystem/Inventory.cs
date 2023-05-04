@@ -10,28 +10,28 @@ public class Inventory
 
     private const int size = 6;
 
-    public List<InventoryItem> inventory;
+    public List<InventoryItem> items;
     public Dictionary<int, InventoryItem> itemDictionary = new Dictionary<int, InventoryItem>();
 
     public Inventory()
     {
-        inventory = new List<InventoryItem>(size);
+        items = new List<InventoryItem>(size);
     }
     public void AddItem(ItemObject itemObject)
     {
         if (itemDictionary.TryGetValue(itemObject.ID, out InventoryItem item))
         {
             item.AddToStack();
-            onInventoryChanged?.Invoke(inventory);
+            onInventoryChanged?.Invoke(items);
         }
         else
         {
             InventoryItem newItem = new InventoryItem(itemObject);
-            inventory.Add(newItem);
+            items.Add(newItem);
             itemDictionary.Add(itemObject.ID, newItem);
-            onInventoryChanged?.Invoke(inventory);
+            onInventoryChanged?.Invoke(items);
         }
-        SaveLoadSystem.Save(SaveData.Instance);
+        SaveLoad.Save(SaveData.Instance);
     }
 
     public void RemoveItem(ItemObject itemObject)
@@ -41,11 +41,11 @@ public class Inventory
             item.RemoveFromStack();
             if (item.stackSize == 0)
             {
-                inventory.Remove(item);
+                items.Remove(item);
                 itemDictionary.Remove(itemObject.ID);
             }
-            onInventoryChanged?.Invoke(inventory);
-            SaveLoadSystem.Save(SaveData.Instance);
+            onInventoryChanged?.Invoke(items);
+            SaveLoad.Save(SaveData.Instance);
         }
     }
 

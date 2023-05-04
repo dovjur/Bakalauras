@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9059242c10299e2499db86c49df77260, type: 3}
+  m_Script: {fileID: 11500000, guid: 70363edb887a0754cab7de519caab5a9, type: 3}
   m_Name: CitrineRing
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: 62619220, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  lootName: Citrine Ring
-  dropChance: 75
-  isUnlocked: 0
+  sprite: {fileID: 62619220, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
+  label: 
+  description: 
+  dropChance: 0
+  isUnlocked: 1
+  buffData: {fileID: 11400000, guid: 99d86ad4e5d57e041a9fb0d30e3cb267, type: 2}
