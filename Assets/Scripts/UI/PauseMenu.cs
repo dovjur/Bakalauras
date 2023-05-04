@@ -11,7 +11,6 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log(pausePanel.activeInHierarchy);
             if (!pausePanel.activeInHierarchy)
             {
                 pausePanel.SetActive(true);
@@ -37,7 +36,6 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
-        Time.timeScale = 1;
         SceneLoadManager.instance.LoadMenu();
     }
 }

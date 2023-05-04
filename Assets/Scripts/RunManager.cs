@@ -42,7 +42,7 @@ public class RunManager : MonoBehaviour
     {
         if (dead)
         {
-
+            lootCard = null;
         }
         else
         {

@@ -45,5 +45,6 @@ public class GameManager : MonoBehaviour
     private void ChangeCompassDestination()
     {
         compass.SetDestination(mapGenerator.spawnPoint);
+        Chest.onChestOpened -= ChangeCompassDestination;
     }
 }

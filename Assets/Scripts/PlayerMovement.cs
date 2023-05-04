@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Chest.onChestOpened += OpenChest;
     }
+    private void OnDisable()
+    {
+        Chest.onChestOpened -= OpenChest;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
