@@ -169,8 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleText: {fileID: 3379746762153042610}
   descriptionText: {fileID: 5017773709169295485}
-  image: {fileID: 7304156613398022538}
   descriptionPanel: {fileID: 7415845714399588885}
+  image: {fileID: 7304156613398022538}
 --- !u!1001 &1778037859940956392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,6 +178,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 733586387000059790}
     m_Modifications:
+    - target: {fileID: 3513490192014058366, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 148.1572
+      objectReference: {fileID: 0}
+    - target: {fileID: 3513490192014058366, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0301
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912389774200101466, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912389774200101466, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912389774200101466, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 14.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705414101447571605, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705414101447571605, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705414101447571605, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 10.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705414101447571605, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860132910912756645, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 148.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860132910912756645, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 14.0352
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860132910912756645, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.030675
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860132910912756645, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8.2639
+      objectReference: {fileID: 0}
     - target: {fileID: 7320153512575312911, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -265,6 +317,10 @@ PrefabInstance:
     - target: {fileID: 9099167224984898301, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
       propertyPath: m_Name
       value: DescriptionPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099167224984898301, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ef10c43650476f4db2d8857fcd337fe, type: 3}

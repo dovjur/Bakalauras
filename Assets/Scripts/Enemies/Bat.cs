@@ -8,7 +8,7 @@ public class Bat : Enemy
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        target = GameManager.Player.transform;
+        target = RunManager.Player.transform;
     }
 
     void Update()

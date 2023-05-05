@@ -45,6 +45,7 @@ public class StatManager : MonoBehaviour
             {
                 stat.SaveStat();
             }
+            notEnoughMoneytext.SetActive(false);
         }
         else
         {
@@ -58,12 +59,13 @@ public class StatManager : MonoBehaviour
         {
             stat.ResetStat();
         }
+        notEnoughMoneytext.SetActive(false);
     }
 
     private IEnumerator NotEnoughMoney()
     {
         notEnoughMoneytext.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         notEnoughMoneytext.SetActive(false);
     }
 }

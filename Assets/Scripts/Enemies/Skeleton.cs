@@ -13,7 +13,7 @@ public class Skeleton : Enemy
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        target = GameManager.Player.transform;
+        target = RunManager.Player.transform;
         timeBtwAttacks = attackSpeed;
     }
     private void Update()

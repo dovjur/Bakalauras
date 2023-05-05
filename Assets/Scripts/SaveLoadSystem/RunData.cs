@@ -10,6 +10,23 @@ public class RunData
     private int enemiesKilled = 0;
     private float timeSpent = 0;
 
+    private static RunData instance;
+    public static RunData Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new RunData();
+            }
+            return instance;
+        }
+        set
+        {
+            instance = value;
+        }
+    }
+
     public void AddCoin()
     {
         coinsCollected++;
@@ -40,9 +57,15 @@ public class RunData
         return timeSpent;
     }
 
-    public void EndOfRun()
+    public void EndOfRun(bool dead)
     {
+        if (dead)
+        {
+            coinsCollected /= 2;
+        }
+
         SaveData.Instance.player.coins += coinsCollected;
+        SaveData.Instance.runData = this;
         SaveLoad.Save(SaveData.Instance);
     }
 

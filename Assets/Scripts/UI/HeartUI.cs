@@ -19,7 +19,7 @@ public class HeartUI : MonoBehaviour
 
     private void Start()
     {
-        character = GameManager.Player;
+        character = RunManager.Player;
         LoadHearts();
     }
     private void OnEnable()

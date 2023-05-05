@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BronzeSword
   m_EditorClassIdentifier: 
   sprite: {fileID: 1366309402, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
-  description: 
+  label: Bronze Sword
+  description: When unlocked gives 2% dodge chance
   dropChance: 100
+  value: 20
   isUnlocked: 1
-  buffData: {fileID: 0}
+  buffData: {fileID: 11400000, guid: b18e1c8749c7fc44383983e457c8824c, type: 2}

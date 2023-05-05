@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: RubbyRing
   m_EditorClassIdentifier: 
   sprite: {fileID: -2016404965, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
+  label: Rubby Ring
   description: 
-  dropChance: 0
+  dropChance: 40
+  value: 50
   isUnlocked: 0
+  buffData: {fileID: 0}

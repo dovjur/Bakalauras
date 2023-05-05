@@ -24,7 +24,7 @@ public class Coin : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        target = GameManager.Player.transform;
+        target = RunManager.Player.transform;
     }
 
     private void Update()
@@ -35,7 +35,7 @@ public class Coin : MonoBehaviour
             rb.MovePosition(transform.position + offset * Time.deltaTime);
         }
 
-        if (GameManager.Player.isMagnetOn)
+        if (RunManager.Player.isMagnetOn)
         {
             Vector3 targetPos = Vector3.MoveTowards(transform.position, target.position, 20 * Time.deltaTime);
             rb.MovePosition(targetPos);
@@ -46,7 +46,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SaveData.Instance.runData.AddCoin();
+            RunData.Instance.AddCoin();
             onCoinCollected();
             Destroy(gameObject);
         }

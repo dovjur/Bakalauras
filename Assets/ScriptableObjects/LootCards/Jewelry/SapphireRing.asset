@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: SapphireRing
   m_EditorClassIdentifier: 
   sprite: {fileID: 1070156930, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
+  label: Sapphire Ring
   description: 
-  dropChance: 0
+  dropChance: 50
+  value: 50
   isUnlocked: 0
+  buffData: {fileID: 0}

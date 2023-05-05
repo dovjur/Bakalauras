@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a25d1fa922891c4a9aa29c03756635d, type: 3}
   m_Name: BigDodgeBuff
   m_EditorClassIdentifier: 
-  buffName: 
-  dodgeChance: 0
+  buffDescription: 
+  dodgeChance: 6

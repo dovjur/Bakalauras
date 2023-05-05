@@ -10,6 +10,6 @@ public class DodgeBuff : BuffData
 
     public override void ApplyBuff()
     {
-        GameManager.Player.dodgeChance += dodgeChance;
+        RunManager.Player.dodgeChance += dodgeChance;
     }
 }

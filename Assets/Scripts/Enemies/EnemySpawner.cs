@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         map = mapGenerator.GetMap();
-        player = GameManager.Player.transform;
+        player = RunManager.Player.transform;
         SpawnEnemy(startEnemies, true);     
     }
 

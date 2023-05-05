@@ -15,6 +15,6 @@ MonoBehaviour:
   ID: 1
   label: Medium Health Potion
   price: 50
-  description: When used it heals 3 hearts
+  description: When used heals 3 hearts
   icon: {fileID: 2079857373, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
   heal: 3

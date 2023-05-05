@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: WoodenShield
   m_EditorClassIdentifier: 
   sprite: {fileID: 1966463739, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
-  description: 
+  label: Wooden Shield
+  description: When unlocked gives 2% dodge chance
   dropChance: 100
-  isUnlocked: 1
-  buffData: {fileID: 0}
+  value: 20
+  isUnlocked: 0
+  buffData: {fileID: 11400000, guid: b18e1c8749c7fc44383983e457c8824c, type: 2}

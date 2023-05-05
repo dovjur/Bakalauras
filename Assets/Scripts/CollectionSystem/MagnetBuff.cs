@@ -7,6 +7,6 @@ public class MagnetBuff : BuffData
 {
     public override void ApplyBuff()
     {
-        GameManager.Player.isMagnetOn = true;
+        RunManager.Player.isMagnetOn = true;
     }
 }

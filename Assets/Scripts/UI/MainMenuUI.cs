@@ -20,12 +20,9 @@ public class MainMenuUI : MonoBehaviour
 
     private static bool isGameStarted;
 
-    private void Awake()
-    {
-        SaveData.Instance = (SaveData)SaveLoad.Load();
-    }
     private void Start()
     {
+        Time.timeScale = 1;
         UpdateUIAfterRun();
         if (isGameStarted)
         {
@@ -36,9 +33,9 @@ public class MainMenuUI : MonoBehaviour
     public void Play()
     {
         isGameStarted = true;
-        if (SaveData.Instance.runData != null)
+        if (RunData.Instance != null)
         {
-            SaveData.Instance.runData.ResetRun();
+            RunData.Instance.ResetRun();
         }
         SceneLoadManager.instance.LoadGame(); 
     }

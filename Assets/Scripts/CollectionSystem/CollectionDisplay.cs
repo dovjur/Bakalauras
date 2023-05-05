@@ -84,7 +84,7 @@ public class CollectionDisplay : MonoBehaviour
         foreach (Card lootCard in collection.collectionCards)
         {
             CollectionCardTemplate cardObject = Instantiate(cardPrefab, panel.GetPanel().transform);
-            cardObject.titleText.text = lootCard.name;
+            cardObject.titleText.text = lootCard.label;
             cardObject.descriptionText.text = lootCard.description;
             cardObject.SetSprite(lootCard.sprite, lootCard.isUnlocked);
         }

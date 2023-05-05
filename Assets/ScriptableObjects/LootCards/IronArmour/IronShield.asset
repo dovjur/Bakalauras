@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: IronShield
   m_EditorClassIdentifier: 
   sprite: {fileID: -2119411120, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
-  description: 
-  dropChance: 0
-  isUnlocked: 1
-  buffData: {fileID: 0}
+  label: Iron Shield
+  description: When unlocked gives 3% dodge chance
+  dropChance: 55
+  value: 40
+  isUnlocked: 0
+  buffData: {fileID: 11400000, guid: 26ea8a371a012214091846ce012e8888, type: 2}

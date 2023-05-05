@@ -19,7 +19,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        inventoryItems = SaveData.Instance.Inventory.items;
+        inventoryItems = SaveData.Instance.inventory.items;
         LoadShop();
         CanBePurchased();
     }
@@ -55,7 +55,7 @@ public class ShopManager : MonoBehaviour
         if (SaveData.Instance.player.coins >= item.price)
         {
             SaveData.Instance.player.coins -= item.price;
-            SaveData.Instance.Inventory.AddItem(item);
+            SaveData.Instance.inventory.AddItem(item);
             SaveLoad.Save(SaveData.Instance);
             onCoinsSpend?.Invoke();
             CanBePurchased();

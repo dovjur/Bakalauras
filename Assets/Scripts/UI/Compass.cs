@@ -9,7 +9,7 @@ public class Compass : MonoBehaviour
 
     void Update()
     {
-        position = GameManager.Player.transform.position;
+        position = RunManager.Player.transform.position;
         float angle = Mathf.Atan2(destination.y - position.y, destination.x - position.x) * 180 / Mathf.PI;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, angle - 90), 1f);
     }

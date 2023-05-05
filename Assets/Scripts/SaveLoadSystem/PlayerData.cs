@@ -7,13 +7,13 @@ public class PlayerData
 {
     public int coins;
     public int health;
-    public int moveSpeed;
-    public int attackSpeed;
+    public float moveSpeed;
+    public float attackSpeed;
     public int strength;
 
     private int maxHealth;
-    private int maxMoveSpeed;
-    private int maxAttackSpeed;
+    private float maxMoveSpeed;
+    private float maxAttackSpeed;
     private int maxStrength;
 
     public PlayerData()

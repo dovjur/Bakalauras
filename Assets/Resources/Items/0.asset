@@ -15,6 +15,6 @@ MonoBehaviour:
   ID: 0
   label: Small Health Potion
   price: 20
-  description: When used it heals 1 heart
+  description: When used heals 1 heart
   icon: {fileID: 1494301898, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
   heal: 1

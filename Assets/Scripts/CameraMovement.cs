@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
     {
         if (target == null)
         {
-            target = GameManager.Player.transform;
+            target = RunManager.Player.transform;
         }
     }
 

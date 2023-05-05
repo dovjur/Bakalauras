@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: RubbyNecklace
   m_EditorClassIdentifier: 
   sprite: {fileID: -2062300245, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
+  label: Rubby Necklace
   description: 
-  dropChance: 0
+  dropChance: 40
+  value: 50
   isUnlocked: 0
+  buffData: {fileID: 0}

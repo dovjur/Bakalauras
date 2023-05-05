@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: CitrineNecklace
   m_EditorClassIdentifier: 
   sprite: {fileID: -633947321, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
+  label: Citrine Necklace
   description: 
-  dropChance: 0
+  dropChance: 60
+  value: 50
   isUnlocked: 0
+  buffData: {fileID: 0}

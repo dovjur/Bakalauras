@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -329346538, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
   label: Gold Helmet
-  description: 
+  description: When unlocked gives 6% dodge chance
   dropChance: 15
+  value: 60
   isUnlocked: 0
+  buffData: {fileID: 11400000, guid: c8998880aaf97914499ddc809f33c16e, type: 2}

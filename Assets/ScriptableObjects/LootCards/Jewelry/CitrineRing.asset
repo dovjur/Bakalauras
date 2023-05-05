@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CitrineRing
   m_EditorClassIdentifier: 
   sprite: {fileID: 62619220, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
-  label: 
-  description: 
-  dropChance: 0
-  isUnlocked: 1
+  label: Citrine Ring
+  description: When unlocked automatically picks up coins
+  dropChance: 60
+  value: 50
+  isUnlocked: 0
   buffData: {fileID: 11400000, guid: 99d86ad4e5d57e041a9fb0d30e3cb267, type: 2}

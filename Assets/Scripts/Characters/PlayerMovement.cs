@@ -12,10 +12,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private Player player;
+
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
     private PlayerState state;
+    private float lastAttack = 0;
+    private float timeBtwAttacks;
 
     private void OnEnable()
     {
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         state = PlayerState.walking;
         animator.SetFloat("Horizontal",0);
         animator.SetFloat("Vertical", -1);
+        timeBtwAttacks = (1f / player.attackSpeed) + 0.5f;
     }
     void Update()
     {
@@ -39,15 +43,15 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.Q) && state != PlayerState.attacking)
+        if (Input.GetKeyDown(KeyCode.Q) && state != PlayerState.attacking && Time.time - lastAttack >= timeBtwAttacks)
         {
             StartCoroutine(AttackCoroutine());
+            lastAttack = Time.time;
         }
-        if (state == PlayerState.walking)
+        else if (state == PlayerState.walking)
         {
             UpdateAnimation();
         }
-        
     }
     private void FixedUpdate()
     {
@@ -72,11 +76,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator AttackCoroutine()
     {
-        state = PlayerState.attacking;
         animator.SetBool("IsAttacking", true);
+        state = PlayerState.attacking;
         yield return null;
         animator.SetBool("IsAttacking", false);
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
         state = PlayerState.walking;
     }
     private void OpenChest()

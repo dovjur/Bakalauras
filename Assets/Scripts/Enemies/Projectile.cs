@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        player = GameManager.Player.transform;
+        player = RunManager.Player.transform;
 
         target = new Vector3(player.position.x, player.position.y);
     }

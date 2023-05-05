@@ -67,4 +67,28 @@ public class CollectionTests
 
         Assert.IsFalse(isUnlocked);
     }
+    [Test]
+    public void IsCollectionComplete_CollectionComplete_ReturnsTrue()
+    {
+        Collection collection = ScriptableObject.CreateInstance<Collection>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
+        collection.collectionCards.Add(lootCard);
+        collection.UnlockCard(lootCard);
+
+        bool isCompleted = collection.IsCollectionComplete();
+
+        Assert.IsTrue(isCompleted);
+    }
+
+    [Test]
+    public void IsCollectionComplete_CollectionIsNotComplete_ReturnsFalse()
+    {
+        Collection collection = ScriptableObject.CreateInstance<Collection>();
+        Card lootCard = ScriptableObject.CreateInstance<Card>();
+        collection.collectionCards.Add(lootCard);
+
+        bool isCompleted = collection.IsCollectionComplete();
+
+        Assert.IsFalse(isCompleted);
+    }
 }

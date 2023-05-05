@@ -42,9 +42,9 @@ public class Enemy : Character
         GetComponent<BoxCollider2D>().enabled = false;
         yield return null;
         animator.SetBool("IsDead", false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         loot.SpawnCoins(coinCount, transform);
-        SaveData.Instance.runData.AddKill();
+        RunData.Instance.AddKill();
         Destroy(gameObject);
     }
 

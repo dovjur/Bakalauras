@@ -15,6 +15,6 @@ MonoBehaviour:
   ID: 2
   label: Large Health Potion
   price: 100
-  description: When used it heals 5 hearts
+  description: When used heals 5 hearts
   icon: {fileID: -109306584, guid: 56b73c7a1f7db3a40889f344f6852c10, type: 3}
   heal: 5

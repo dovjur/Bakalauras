@@ -14,6 +14,7 @@ public class Card : ScriptableObject, ISerializable
     public string description;
     [Range(0f, 100f)]
     public int dropChance;
+    public int value;
     public bool isUnlocked;
     public BuffData buffData;
 

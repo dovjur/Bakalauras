@@ -17,12 +17,12 @@ public class UpgradeAttackSpeedCommand : ICommand
     {
         SaveData.Instance.player.attackSpeed++;
         statValue.text = SaveData.Instance.player.attackSpeed.ToString();
-        StatManager.upgradePrice += SaveData.Instance.player.attackSpeed * 100;
+        StatManager.upgradePrice += (int)SaveData.Instance.player.attackSpeed * 100;
     }
 
     public void UndoCommand()
     {
-        StatManager.upgradePrice -= SaveData.Instance.player.attackSpeed * 100;
+        StatManager.upgradePrice -= (int)SaveData.Instance.player.attackSpeed * 100;
         SaveData.Instance.player.attackSpeed--;
         statValue.text = SaveData.Instance.player.attackSpeed.ToString(); 
     }

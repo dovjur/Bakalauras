@@ -4,16 +4,7 @@ using UnityEngine;
 
 public class CollectionManager : MonoBehaviour
 {
-    [SerializeField]
-    private List<Card> lootCards = new List<Card>();
     public List<Collection> collections;
-    void Start()
-    {
-        if (SaveData.Instance.lootCards != null)
-        {
-            lootCards = SaveData.Instance.lootCards;
-        }
-    }
 
     public Card GetDroppedLoot()
     {
@@ -53,8 +44,6 @@ public class CollectionManager : MonoBehaviour
                 break;
             }
         }
-        SaveData.Instance.lootCards = lootCards;
-        SaveLoad.Save(SaveData.Instance);
     }
 
     public void ApplyBuffs()

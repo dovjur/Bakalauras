@@ -7,7 +7,7 @@ public class GameUI : MonoBehaviour
 {
     [Header("Coins")]
     [SerializeField]
-    private TextMeshProUGUI coinsCollected;
+    private GameObject coinPanel;
 
     private void OnEnable()
     {
@@ -19,6 +19,15 @@ public class GameUI : MonoBehaviour
     }
     private void UpdateCoinCount()
     {
-        coinsCollected.text = SaveData.Instance.runData.GetCoins().ToString();
+        if (!coinPanel.activeSelf)
+        {
+            coinPanel.SetActive(true);
+        }
+        coinPanel.GetComponentInChildren<TextMeshProUGUI>().text = RunData.Instance.GetCoins().ToString();
+    }
+
+    public void MainMenu()
+    {
+        SceneLoadManager.instance.LoadMenu();
     }
 }
