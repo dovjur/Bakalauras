@@ -199,5 +199,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7478868522c0c4399b23eb4163b9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMagnetOn: 0
   prefab: {fileID: 9053335762604902473}

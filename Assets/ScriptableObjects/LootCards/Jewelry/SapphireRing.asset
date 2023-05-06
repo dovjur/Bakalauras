@@ -17,5 +17,5 @@ MonoBehaviour:
   description: 
   dropChance: 50
   value: 50
-  isUnlocked: 0
+  isUnlocked: 1
   buffData: {fileID: 0}

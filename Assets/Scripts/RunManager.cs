@@ -14,7 +14,7 @@ public class RunManager : MonoBehaviour
     [SerializeField]
     private Compass compass;
     [SerializeField]
-    private GameObject runEndPanel;
+    private EndOfRunPanel runEndPanel;
 
     private CollectionManager collectionManager;
     private Card lootCard;
@@ -63,6 +63,11 @@ public class RunManager : MonoBehaviour
 
     public void EndRun(bool dead)
     {
+        Time.timeScale = 0;
+        RunData.Instance.SetTime(Mathf.Round(timer));
+        RunData.Instance.EndOfRun(dead);
+        runEndPanel.DisplayPanel(lootCard, dead);
+
         if (!dead)
         {
             if (lootCard != null && lootCard.isUnlocked)
@@ -72,9 +77,6 @@ public class RunManager : MonoBehaviour
             collectionManager.UpdateCollection(lootCard);
         }
 
-        RunData.Instance.SetTime(Mathf.Round(timer));
-        RunData.Instance.EndOfRun(dead);
-        runEndPanel.SetActive(true);
-        Time.timeScale = 0;
+        SaveLoad.Save(SaveData.Instance);
     }
 }

@@ -16,12 +16,15 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         }
     }
-    public void PlaySound(AudioClip clip)
+    private void Start()
     {
-
+        AudioListener.volume = SaveData.Instance.masterVolume;
     }
+
     public void ChangeMasterVolume(float value)
     {
         AudioListener.volume = value;
+        SaveData.Instance.masterVolume = value;
+        SaveLoad.Save(SaveData.Instance);
     }
 }

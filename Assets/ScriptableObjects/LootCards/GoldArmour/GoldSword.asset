@@ -17,5 +17,5 @@ MonoBehaviour:
   description: When unlocked gives 6% dodge chance
   dropChance: 20
   value: 60
-  isUnlocked: 0
+  isUnlocked: 1
   buffData: {fileID: 11400000, guid: c8998880aaf97914499ddc809f33c16e, type: 2}

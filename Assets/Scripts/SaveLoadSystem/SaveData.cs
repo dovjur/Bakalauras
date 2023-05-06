@@ -25,4 +25,5 @@ public class SaveData
     public PlayerData player = new PlayerData();
     public Inventory inventory = new Inventory();
     public RunData runData = new RunData();
+    public float masterVolume;
 }

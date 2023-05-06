@@ -29,11 +29,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void Settings()
-    {
-
-    }
-
     public void MainMenu()
     {
         SceneLoadManager.instance.LoadMenu();
